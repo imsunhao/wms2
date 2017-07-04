@@ -18,10 +18,20 @@ Vue.use(ElementUI);
 const store = new Vuex.Store({
   state: {
     count: 0,
+    todos: [
+      { id: 1, text: 'hfgh', done: true },
+      { id: 2, text: 'baba', done: false },
+      { id: 3, text: 'lala', done: true },
+    ],
+  },
+  getters: {
+    doneTodos: state => {
+      return state.todos.filter(todo => todo.done);
+    },
   },
   mutations: {
-    increment (state) {
-      state.count++;
+    increment (state, payload) {
+      state.count += payload.amount;
     },
   },
 });
