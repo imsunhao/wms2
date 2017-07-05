@@ -7,7 +7,7 @@
 
 <script>
   export default {
-    name: 'loadingComp',
+    name: 'loading-comp',
     data () {
       return {
       };

@@ -1,18 +1,19 @@
 <template>
   <el-alert
-    title="错误提示"
+    :title="title||'网路故障'"
     type="error"
-    :description="message"
+    :description="msg||message"
     show-icon>
   </el-alert>
 </template>
 
 <script>
   export default {
-    name: 'errorComp',
+    name: 'error-comp',
+    prop: {msg: '', title: ''},
     data () {
       return {
-        message: '加载出错!',
+        message: '因为网路原因,加载数据出错!',
       };
     },
   };

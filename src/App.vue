@@ -11,7 +11,7 @@
         </el-breadcrumb>
       </div>
       <transition name="slide-fade" mode="out-in">
-      <router-view></router-view>
+        <router-view></router-view>
       </transition>
     </el-card>
   </div>
@@ -24,16 +24,14 @@ export default {
 </script>
 
 <style lang="scss">
-  /* 可以设置不同的进入和离开动画 */
-  /* 设置持续时间和动画函数 */
+  /* 设置 router-view 动画特效*/
   .slide-fade-enter-active {
     transition: all .3s ease;
   }
   .slide-fade-leave-active {
     transition: all .2s cubic-bezier(1.0, 0.5, 0.8, 1.0);
   }
-  .slide-fade-enter
-    /* .slide-fade-leave-active for <2.1.8 */ {
+  .slide-fade-enter{
     transform: translateX(10px);
     opacity: 0;
   }
@@ -41,4 +39,26 @@ export default {
     transform: translateX(-10px);
     opacity: 0;
   }
+  /* 设置  全局 滚动条*/
+  ::-webkit-scrollbar {
+    width: 0.2rem;
+    height: 0.2rem;
+  }
+  ::-webkit-scrollbar-track {
+  
+  }
+  ::-webkit-scrollbar-thumb {
+    border-radius: 0.2rem;
+    background: rgba(0,0,0,0.2);
+  }
+  ::-webkit-scrollbar-thumb:window-inactive {
+    background: rgba(0,0,0,0.1);
+  }
+  ::-webkit-scrollbar-thumb:vertical:hover{
+    background-color: rgba(0,0,0,0.3);
+  }
+  ::-webkit-scrollbar-thumb:vertical:active{
+    background-color: rgba(0,0,0,0.7);
+  }
+  
 </style>

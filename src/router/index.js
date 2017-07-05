@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
-import LoadingComp from '@/components/LoadingComp.vue';
-import ErrorComp from '@/components/ErrorComp.vue';
+import LoadingComp from '@/components/0_static/LoadingComp.vue';
+import ErrorComp from '@/components/0_static/ErrorComp.vue';
 
 Vue.use(Router);
 

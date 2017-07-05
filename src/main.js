@@ -7,10 +7,16 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-default/index.css';
 import App from './App.vue';
 
+import LoadingComp from '@/components/0_static/LoadingComp.vue';
+import ErrorComp from '@/components/0_static/ErrorComp.vue';
+
 Vue.config.productionTip = true;
 
 Vue.use(Vuex);
 Vue.use(ElementUI);
+
+Vue.component('loading-comp', LoadingComp);
+Vue.component('error-comp', ErrorComp);
 
 const store = new Vuex.Store({
   state: {
