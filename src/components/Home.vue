@@ -12,16 +12,27 @@
           :label="city"
           :key="city.prop">{{city.label}}</el-checkbox>
       </el-checkbox-group>
-      <el-select
-        multiple-limit="4"
-        v-model="checkedCities1" multiple placeholder="请选择">
-        <el-option
-          v-for="item in cities"
-          :key="item.prop"
-          :label="item.label"
-          :value="item">
-        </el-option>
-      </el-select>
+      <el-popover
+        ref="popover4"
+        width="400"
+        :visible-arrow="false"
+        placement="right"
+        trigger="click">
+        <el-select
+          class="imsunhao"
+          name="testSelet1"
+          multiple-limit="4"
+          v-model="checkedCities1" multiple placeholder="请选择">
+          <el-option
+            v-for="item in cities"
+            :key="item.prop"
+            :label="item.label"
+            :value="item">
+          </el-option>
+        </el-select>
+      </el-popover>
+  
+      <el-button v-popover:popover4>click 激活</el-button>
       <el-table :data="doneTodos" border>
         <el-table-column
           align="center"
@@ -42,7 +53,6 @@
             <el-popover
               placement="right"
               :title="s.row.text"
-              width="200"
               trigger="click">
               <solt name="content">
                 <el-button type="success" @click="a(0)">{{count}}</el-button>
@@ -104,11 +114,11 @@
       p (number) {
         switch (number) {
         case 0:
-          setTimeout(() => {
-            this.loading = false;
-            this.error = true;
-          }, 3000);
-//          this.loading = false;
+//          setTimeout(() => {
+//            this.loading = false;
+//            this.error = true;
+//          }, 3000);
+          this.loading = false;
           console.log(111);
           break;
         default:
@@ -133,5 +143,7 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-
+  .imsunhao{
+    width: 100%;
+  }
 </style>

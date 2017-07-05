@@ -26,19 +26,17 @@
           <file leaf-file-name="Home.vue" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/components/Home.vue">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="150">
-                  <caret line="54" column="17" lean-forward="true" selection-start-line="54" selection-start-column="17" selection-end-line="54" selection-end-column="17" />
+                <state relative-caret-position="209">
+                  <caret line="109" column="14" lean-forward="true" selection-start-line="109" selection-start-column="14" selection-end-line="109" selection-end-column="14" />
                   <folding>
                     <element signature="n#el-checkbox-group#0;n#el-row#0;n#template#0;n#!!top" expanded="false" />
-                    <element signature="n#el-select#0;n#el-row#0;n#template#0;n#!!top" expanded="false" />
+                    <element signature="n#el-popover#0;n#el-row#0;n#template#0;n#!!top" expanded="false" />
                     <element signature="n#el-table#0;n#el-row#0;n#template#0;n#!!top" expanded="false" />
-                    <element signature="n#template#0;n#el-table-column#2;n#el-table#0;n#el-row#0;n#template#0;n#!!top" expanded="false" />
-                    <element signature="e#1770#1814#0" expanded="true" />
-                    <element signature="e#2955#3250#0" expanded="false" />
-                    <marker date="1499246629072" expanded="false" signature="2897:2936" ph="{...}" />
-                    <marker date="1499246629072" expanded="false" signature="3208:3232" ph="..." />
-                    <marker date="1499246629072" expanded="false" signature="3271:3380" ph="{...}" />
-                    <marker date="1499246629072" expanded="false" signature="3401:3524" ph="{...}" />
+                    <element signature="e#2042#2086#0" expanded="true" />
+                    <marker date="1499248328953" expanded="false" signature="3169:3208" ph="{...}" />
+                    <marker date="1499248328953" expanded="false" signature="3486:3510" ph="..." />
+                    <marker date="1499248328953" expanded="false" signature="3549:3658" ph="{...}" />
+                    <marker date="1499248328953" expanded="false" signature="3679:3802" ph="{...}" />
                   </folding>
                 </state>
               </provider>
@@ -594,7 +592,7 @@
       <workItem from="1498534683861" duration="7000" />
       <workItem from="1499060275046" duration="18965000" />
       <workItem from="1499155651917" duration="11889000" />
-      <workItem from="1499216517777" duration="23844000" />
+      <workItem from="1499216517777" duration="25483000" />
     </task>
     <task id="LOCAL-00001" summary="简单的测试环节">
       <created>1499087628861</created>
@@ -652,11 +650,18 @@
       <option name="project" value="LOCAL" />
       <updated>1499246765126</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="对于 可配置的 table 猜想">
+      <created>1499246791793</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1499246791793</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="61692000" />
+    <option name="totallyTimeSpent" value="63331000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1242" y="0" width="1263" height="1437" extended-state="0" />
@@ -708,7 +713,8 @@
     <MESSAGE value="配置主页面设置与生产环境" />
     <MESSAGE value="猜想 动态配置 查看 权限" />
     <MESSAGE value="配置 网路等待 模块" />
-    <option name="LAST_COMMIT_MESSAGE" value="配置 网路等待 模块" />
+    <MESSAGE value="对于 可配置的 table 猜想" />
+    <option name="LAST_COMMIT_MESSAGE" value="对于 可配置的 table 猜想" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1085,19 +1091,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Home.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="54" column="17" lean-forward="true" selection-start-line="54" selection-start-column="17" selection-end-line="54" selection-end-column="17" />
+        <state relative-caret-position="209">
+          <caret line="109" column="14" lean-forward="true" selection-start-line="109" selection-start-column="14" selection-end-line="109" selection-end-column="14" />
           <folding>
             <element signature="n#el-checkbox-group#0;n#el-row#0;n#template#0;n#!!top" expanded="false" />
-            <element signature="n#el-select#0;n#el-row#0;n#template#0;n#!!top" expanded="false" />
+            <element signature="n#el-popover#0;n#el-row#0;n#template#0;n#!!top" expanded="false" />
             <element signature="n#el-table#0;n#el-row#0;n#template#0;n#!!top" expanded="false" />
-            <element signature="n#template#0;n#el-table-column#2;n#el-table#0;n#el-row#0;n#template#0;n#!!top" expanded="false" />
-            <element signature="e#1770#1814#0" expanded="true" />
-            <element signature="e#2955#3250#0" expanded="false" />
-            <marker date="1499246629072" expanded="false" signature="2897:2936" ph="{...}" />
-            <marker date="1499246629072" expanded="false" signature="3208:3232" ph="..." />
-            <marker date="1499246629072" expanded="false" signature="3271:3380" ph="{...}" />
-            <marker date="1499246629072" expanded="false" signature="3401:3524" ph="{...}" />
+            <element signature="e#2042#2086#0" expanded="true" />
+            <marker date="1499248328953" expanded="false" signature="3169:3208" ph="{...}" />
+            <marker date="1499248328953" expanded="false" signature="3486:3510" ph="..." />
+            <marker date="1499248328953" expanded="false" signature="3549:3658" ph="{...}" />
+            <marker date="1499248328953" expanded="false" signature="3679:3802" ph="{...}" />
           </folding>
         </state>
       </provider>
