@@ -8,4 +8,4 @@ yarn-error.log*
 /server/public
 /server/views
 
-.idea
+.idea/
