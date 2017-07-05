@@ -10,7 +10,7 @@
 <script>
   export default {
     name: 'error-comp',
-    prop: {msg: '', title: ''},
+    props: {msg: '', title: ''},
     data () {
       return {
         message: '因为网路原因,加载数据出错!',

@@ -4,14 +4,6 @@
       v-loading="loading"
       element-loading-text="拼命加载中">
       <error-comp v-if="error" :title="'asdgsd'"></error-comp>
-      <el-checkbox-group
-        v-model="checkedCities1"
-        :max="4">
-        <el-checkbox
-          v-for="city in cities"
-          :label="city"
-          :key="city.prop">{{city.label}}</el-checkbox>
-      </el-checkbox-group>
       <el-popover
         ref="popover4"
         width="400"
@@ -31,8 +23,7 @@
           </el-option>
         </el-select>
       </el-popover>
-  
-      <el-button v-popover:popover4>click 激活</el-button>
+      <el-button v-popover:popover4></el-button>
       <el-table :data="doneTodos" border>
         <el-table-column
           align="center"
@@ -55,8 +46,8 @@
               :title="s.row.text"
               trigger="click">
               <solt name="content">
-                <el-button type="success" @click="a(0)">{{count}}</el-button>
-                <el-button type="success" @click="a(1)">{{countPlusLocalState}}</el-button>
+                <el-button type="success" @click="f(0)">{{count}}</el-button>
+                <el-button type="success" @click="f(1)">{{countPlusLocalState}}</el-button>
               </solt>
               <el-button slot="reference">操作</el-button>
             </el-popover>
@@ -108,7 +99,7 @@
       ...mapGetters(['doneTodos']),
     },
     methods: {
-      a (number) {
+      f (number) {
         this[Func[number]]();
       },
       p (number) {
