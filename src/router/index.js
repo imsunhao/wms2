@@ -17,12 +17,23 @@ const Home = () => ({
   delay: 200,
   timeout: 3000,
 });
+const Pane = () => ({
+  component: import('@/components/1_Navigation/Pane.vue'),
+  loading: LoadingComp,
+  error: ErrorComp,
+  delay: 200,
+  timeout: 3000,
+});
 
 export default new Router({
   routes: [
     {
       path: '/',
       component: Home,
+    },
+    {
+      path: '/pane',
+      component: Pane,
     },
     {
       path: '/user/:id',
