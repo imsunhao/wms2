@@ -8,6 +8,7 @@ import 'element-ui/lib/theme-default/index.css';
 import App from './App.vue';
 
 import LoadingComp from '@/components/0_static/LoadingComp.vue';
+import LoadingConf from './config/Loading/title';
 import ErrorComp from '@/components/0_static/ErrorComp.vue';
 
 Vue.config.productionTip = true;
@@ -21,6 +22,13 @@ Vue.component('error-comp', ErrorComp);
 const store = new Vuex.Store({
   state: {
     count: 0,
+    loading: {
+      s0: false,
+      s1: false,
+      s2: false,
+      s3: false,
+      t: '',
+    },
     todos: [
       {
         id: '12987122',
@@ -65,6 +73,10 @@ const store = new Vuex.Store({
   mutations: {
     increment (state, payload) {
       state.count += payload.amount;
+    },
+    openLoading (state, payload) {
+      state.loading['s' + payload.amount] = true;
+      state.loading['t'] = LoadingConf(payload.t);
     },
   },
 });

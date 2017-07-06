@@ -31,6 +31,7 @@
         width="80"></el-table-column>
       <el-table-column
         v-for="value in checkedCities1"
+        :key="value.prop"
         :label="value.label"
         :min-width="value.minWidth||'120px'"
         :prop="value.prop"
@@ -54,12 +55,14 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-button @click="testHttp">testHttp</el-button>
   </el-row>
 </template>
 
 <script>
   import { mapState, mapGetters } from 'vuex';
   import Mutations from '../../config/Mutations/M0_Home';
+  import {MutationsMethods} from '../../config/Mutations/helpers';
   
   const cityOptions = [
     {prop: 'id', label: '商品 ID', minWidth: '200px'},
@@ -100,7 +103,7 @@
     },
     methods: {
       f (number) {
-        this[Mutations[number]].value();
+        this[Mutations[number].event_name]();
       },
       p (number) {
         switch (number) {
@@ -109,30 +112,29 @@
             this.loading = false;
             console.log('加载完成');
 //            this.error = true;
-          }, 3000);
+          }, 10);
           break;
         default:
           return false;
         }
       },
-      [Mutations[0].name] () {
-        this.$store.commit('increment', {
-          type: Mutations[0].type,
-          amount: 1,
+      testHttp () {
+        // GET /someUrl
+        this.$http.get('/wms_cg_web/auth/test/1234567').then(response => {
+          // get body data
+          console.log(response.body);
+        }, response => {
+          // error callback
+          console.log(response);
         });
       },
-      [Mutations[1].name] () {
-        this.$store.commit('increment', {
-          type: Mutations[1].type,
-          amount: this.localCount,
-        });
-      },
+      ...MutationsMethods(Mutations),
     },
   };
 </script>
 
 <style lang="scss">
-  .imsunhao{
+  .imsunhao {
     width: 100%;
   }
 </style>

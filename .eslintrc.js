@@ -32,6 +32,7 @@ module.exports = {
     quotes: ['error', 'single'],
     semi: ['error', 'always'],
     'no-unused-vars': ['warn'],
-    'no-console': process.env.NODE_ENV === 'production' ? 1 : 0
+    'no-console': process.env.NODE_ENV === 'production' ? 1 : 0,
+    'no-ignore':0,
   }
 };

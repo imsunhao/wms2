@@ -1,10 +1,12 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import Resource from 'vue-resource';
 
 import LoadingComp from '@/components/0_static/LoadingComp.vue';
 import ErrorComp from '@/components/0_static/ErrorComp.vue';
 
 Vue.use(Router);
+Vue.use(Resource);
 
 const User = {
   template: '<h2>User {{ $route.params.id }}</h2>',
@@ -69,8 +71,8 @@ export default new Router({
         },
       ],
       beforeEnter: (to, from, next) => {
-        console.log('身份验证！');
-        next();
+        console.log(from);
+        setTimeout(() => { console.log('身份验证成功！'); next(); }, 10);
       },
     },
   ],

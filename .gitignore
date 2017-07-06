@@ -9,3 +9,7 @@ yarn-error.log*
 /server/views
 
 .idea/
+
+
+realServerConfig.js
+DBConfig.js
