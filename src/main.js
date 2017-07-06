@@ -21,6 +21,7 @@ Vue.component('error-comp', ErrorComp);
 
 const store = new Vuex.Store({
   state: {
+    // activePage: {},
     count: 0,
     loading: {
       s0: false,
@@ -78,6 +79,9 @@ const store = new Vuex.Store({
       state.loading['s' + payload.amount] = true;
       state.loading['t'] = LoadingConf(payload.t);
     },
+    // changeActivePage (state, payload) {
+    //   state.activePage = payload.amount;
+    // },
   },
 });
 

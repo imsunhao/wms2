@@ -2,17 +2,22 @@ export default [
   {
     event_name: 'SOME_MUTATION1',
     commit: 'increment',
-    payload: {
-      event: '测试而已',
-      amount: this.localCount,
+    payload: obj => {
+      return {
+        event: '测试而已',
+        amount: obj.$data.localCount,
+      };
     },
   },
   {
     event_name: 'SOME_MUTATION2',
     commit: 'increment',
-    payload: {
-      event: '测试而已222',
-      amount: 1,
+    payload (obj) {
+      return {
+        event: '测试而已222',
+        amount: 1,
+      };
     },
   },
 ];
+

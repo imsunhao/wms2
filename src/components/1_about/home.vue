@@ -120,7 +120,9 @@
       },
       testHttp () {
         // GET /someUrl
-        this.$http.get('/wms_cg_web/auth/test/1234567').then(response => {
+        this.$http
+        .get('/wms_cg_web/auth/test/1234567')
+        .then(response => {
           // get body data
           console.log(response.body);
         }, response => {
@@ -129,6 +131,10 @@
         });
       },
       ...MutationsMethods(Mutations),
+    },
+    mounted () {
+      console.log('Vue had mounted!');
+//      this.$store.commit(commit, payload);
     },
   };
 </script>
