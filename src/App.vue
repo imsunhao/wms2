@@ -1,19 +1,8 @@
 <template>
   <div id="app">
-    <h1>Hello App!</h1>
-    <el-card class="box-card">
-      <div slot="header" class="clearfix">
-        <el-breadcrumb separator=">">
-          <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-          <el-breadcrumb-item :to="{ path: '/pane' }">标签页</el-breadcrumb-item>
-          <el-breadcrumb-item :to="{ path: '/user/123' }">活动列表</el-breadcrumb-item>
-          <el-breadcrumb-item :to="{ path: '/user/1241' }">活动详情</el-breadcrumb-item>
-        </el-breadcrumb>
-      </div>
-      <transition name="slide-fade" mode="out-in">
-        <router-view></router-view>
-      </transition>
-    </el-card>
+    <!--<transition>-->
+      <router-view></router-view>
+    <!--</transition>-->
   </div>
 </template>
 
@@ -24,21 +13,6 @@ export default {
 </script>
 
 <style lang="scss">
-  /* 设置 router-view 动画特效*/
-  .slide-fade-enter-active {
-    transition: all .3s ease;
-  }
-  .slide-fade-leave-active {
-    transition: all .2s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-  }
-  .slide-fade-enter{
-    transform: translateX(10px);
-    opacity: 0;
-  }
-  .slide-fade-leave-to{
-    transform: translateX(-10px);
-    opacity: 0;
-  }
   /* 设置  全局 滚动条*/
   ::-webkit-scrollbar {
     width: 0.2rem;
@@ -60,5 +34,4 @@ export default {
   ::-webkit-scrollbar-thumb:vertical:active{
     background-color: rgba(0,0,0,0.7);
   }
-  
 </style>

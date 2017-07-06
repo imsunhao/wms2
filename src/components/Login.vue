@@ -1,10 +1,12 @@
 <template>
-
+  <el-row>
+    <router-link to="wms/home">wms</router-link>
+  </el-row>
 </template>
 
 <script>
   export default {
-    name: 'hello',
+    name: 'login',
     data () {
       return {
       };
