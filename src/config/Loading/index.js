@@ -5,10 +5,3 @@ export {
   title,
   time,
 };
-
-export default () => {
-  return {
-    title,
-    time,
-  };
-};
