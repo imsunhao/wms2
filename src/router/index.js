@@ -4,6 +4,7 @@ import Resource from 'vue-resource';
 
 import LoadingComp from '@/components/0_static/LoadingComp.vue';
 import ErrorComp from '@/components/0_static/ErrorComp.vue';
+import {delay, timeout} from '../config/Loading';
 
 Vue.use(Router);
 Vue.use(Resource);
@@ -12,15 +13,12 @@ const User = {
   template: '<h2>User {{ $route.params.id }}</h2>',
 };
 
-const delay = 200;
-const timerout = 3000;
-
 const Login = () => ({
   component: import('@/components/Login.vue'),
   loading: LoadingComp,
   error: ErrorComp,
   delay: delay,
-  timeout: timerout,
+  timeout: timeout,
 });
 
 const Main = () => ({
@@ -28,7 +26,7 @@ const Main = () => ({
   loading: LoadingComp,
   error: ErrorComp,
   delay: delay,
-  timeout: timerout,
+  timeout: timeout,
 });
 
 const Pane = () => ({
@@ -36,7 +34,7 @@ const Pane = () => ({
   loading: LoadingComp,
   error: ErrorComp,
   delay: delay,
-  timeout: timerout,
+  timeout: timeout,
 });
 
 const Home = () => ({
@@ -44,7 +42,7 @@ const Home = () => ({
   loading: LoadingComp,
   error: ErrorComp,
   delay: delay,
-  timeout: timerout,
+  timeout: timeout,
 });
 
 export default new Router({

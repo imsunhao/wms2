@@ -62,7 +62,7 @@
 <script>
   import { mapState, mapGetters } from 'vuex';
   import Mutations from '../../config/Mutations/M0_Home';
-  import {MutationsMethods} from '../../config/Mutations/helpers';
+  import {MutationsMethods} from '../../config/Mutations';
   
   const cityOptions = [
     {prop: 'id', label: '商品 ID', minWidth: '200px'},
