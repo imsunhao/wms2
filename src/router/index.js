@@ -4,7 +4,7 @@ import Resource from 'vue-resource';
 
 import LoadingComp from '@/components/0_static/LoadingComp.vue';
 import ErrorComp from '@/components/0_static/ErrorComp.vue';
-import {delay, timeout} from '../config/Loading';
+import {time} from '../config/Loading';
 
 Vue.use(Router);
 Vue.use(Resource);
@@ -17,32 +17,32 @@ const Login = () => ({
   component: import('@/components/Login.vue'),
   loading: LoadingComp,
   error: ErrorComp,
-  delay: delay,
-  timeout: timeout,
+  delay: time.delay,
+  timeout: time.timeout,
 });
 
 const Main = () => ({
   component: import('@/components/wms.vue'),
   loading: LoadingComp,
   error: ErrorComp,
-  delay: delay,
-  timeout: timeout,
+  delay: time.delay,
+  timeout: time.timeout,
 });
 
 const Pane = () => ({
   component: import('@/components/2_navigation/Pane.vue'),
   loading: LoadingComp,
   error: ErrorComp,
-  delay: delay,
-  timeout: timeout,
+  delay: time.delay,
+  timeout: time.timeout,
 });
 
 const Home = () => ({
   component: import('@/components/1_about/home.vue'),
   loading: LoadingComp,
   error: ErrorComp,
-  delay: delay,
-  timeout: timeout,
+  delay: time.delay,
+  timeout: time.timeout,
 });
 
 export default new Router({
