@@ -1,18 +1,6 @@
 <template>
   <el-row class="wrapper">
     <!--<router-link to="wms/home">wms</router-link>-->
-    <div class="container">
-      <transition name="fade">
-        <div v-if="show" class="inner">
-          <h1>Welcome</h1>
-          <div class="form">
-            <input type="text" placeholder="Username">
-            <input type="password" placeholder="Password">
-            <button type="submit" id="login-button" @click="login" :disabled="!show">Login</button>
-          </div>
-        </div>
-      </transition>
-    </div>
     <ul :class="[{ loading: loading }, 'bg-bubbles']">
       <li></li>
       <li></li>
@@ -25,6 +13,19 @@
       <li></li>
       <li></li>
     </ul>
+    <div class="container">
+      <transition name="fade">
+        <div v-if="show" class="inner">
+          <h1>WMS 4.0</h1>
+          <div class="form">
+            <input type="text" placeholder="Username">
+            <input type="password" placeholder="Password">
+            <button type="submit" id="login-button" @click="login" :disabled="!show">Login</button>
+          </div>
+          <p class="version">&nbsp;--&nbsp;乐速科技&nbsp;--&nbsp;</p>
+        </div>
+      </transition>
+    </div>
   </el-row>
 </template>
 
@@ -90,18 +91,9 @@
   }
   
   .wrapper {
+    height:100vh;
     background: #50a3a2;
-    background: -webkit-linear-gradient(top left, #50a3a2 0%, #53e3a6 100%);
     background: linear-gradient(to bottom right, #50a3a2 0%, #53e3a6 100%);
-    opacity: 0.8;
-    position: absolute;
-    top: 50%;
-    left: 0;
-    width: 100%;
-    height: 400px;
-    margin-top: -200px;
-    overflow: hidden;
-    perspective: 2000px;
   }
   
   .wrapper.form-success .container h1 {
@@ -111,21 +103,32 @@
   }
   
   .container {
-    max-width: 600px;
-    margin: 0 auto;
+    opacity: 0.8;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    margin-top: -200px;
+    overflow: hidden;
+    perspective: 2000px;
+    
     padding: 80px 0;
     height: 400px;
     text-align: center;
+    
+    .inner{
+      max-width: 600px;
+      margin: 0 auto;
+      h1 {
+        font-size: 40px;
+        -webkit-transition-duration: 1s;
+        transition-duration: 1s;
+        -webkit-transition-timing-function: ease-in-put;
+        transition-timing-function: ease-in-put;
+        font-weight: 200;
+      }
+    }
   }
-  .container h1 {
-    font-size: 40px;
-    -webkit-transition-duration: 1s;
-    transition-duration: 1s;
-    -webkit-transition-timing-function: ease-in-put;
-    transition-timing-function: ease-in-put;
-    font-weight: 200;
-  }
-  
   .form {
     padding: 20px 0;
     position: relative;
@@ -183,11 +186,11 @@
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 1;
+    z-index: 0;
   }
   .bg-bubbles li {
-    border-radius: 50%;
-    background-image: url('../assets/logo.png');
+    /*border-radius: 50%;*/
+    /*background-image: url('../assets/logo.png');*/
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -200,12 +203,12 @@
     transition: 1s;
     transition-timing-function: linear;
     &:nth-child(2n){
-      bottom: -160px;
+      bottom: -200px;
       animation: square 25s infinite;
       
     }
     &:nth-child(2n+1){
-      top: -160px;
+      top: -200px;
       animation: square2 25s infinite;
     }
     &:nth-child(1) {
@@ -290,28 +293,28 @@
     }
   }
   
-  @keyframes square {
-    0% {
-      -webkit-transform: translateY(0);
-      transform: translateY(0);
-    }
-    50% {
-      -webkit-transform: translateY(-700px) rotate(600deg);
-      transform: translateY(-700px) rotate(600deg);
-    }
-    100% {
-      -webkit-transform: translateY(0);
-      transform: translateY(0);
-    }
-  }
   @keyframes square2 {
     0% {
       -webkit-transform: translateY(0);
       transform: translateY(0);
     }
     50% {
-      -webkit-transform: translateY(700px) rotate(600deg);
-      transform: translateY(700px) rotate(600deg);
+      -webkit-transform: translateY(1200px) rotate(600deg);
+      transform: translateY(1200px) rotate(600deg);
+    }
+    100% {
+      -webkit-transform: translateY(0);
+      transform: translateY(0);
+    }
+  }
+  @keyframes square {
+    0% {
+      -webkit-transform: translateY(0);
+      transform: translateY(0);
+    }
+    50% {
+      -webkit-transform: translateY(-1200px) rotate(600deg);
+      transform: translateY(-1200px) rotate(600deg);
     }
     100% {
       -webkit-transform: translateY(0);
@@ -343,5 +346,11 @@
     100% {
       transform: rotateX(60deg) translateY(-600px);
     }
+  }
+  
+  .version{
+    color: #e4e4e4;
+    font-size: 1em;
+    text-align: center;
   }
 </style>
