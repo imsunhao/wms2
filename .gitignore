@@ -13,3 +13,6 @@ yarn-error.log*
 
 realServerConfig.js
 DBConfig.js
+
+server/config/
+server/log/
