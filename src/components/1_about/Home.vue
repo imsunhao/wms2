@@ -6,7 +6,7 @@
     <error-comp v-if="error" :title="'asdgsd'"></error-comp>
     <el-popover
       ref="popover4"
-      width="400"
+      width="300"
       :visible-arrow="false"
       placement="right"
       trigger="click">
