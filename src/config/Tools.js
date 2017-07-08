@@ -18,4 +18,4 @@ function speckText (str) {
   // sound.play();
 }
 
-export {speckText}
+export {speckText};

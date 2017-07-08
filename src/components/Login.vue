@@ -18,9 +18,9 @@
         <div v-if="show" class="inner">
           <h1>WMS 4.0</h1>
           <div class="form">
-            <input type="text" placeholder="Username">
-            <input type="password" placeholder="Password">
-            <button type="submit" id="login-button" @click="login" :disabled="!show">Login</button>
+            <input type="text" placeholder="用户名">
+            <input type="password" placeholder="密码">
+            <button type="submit" id="login-button" @click="login" :disabled="!show">登陆</button>
           </div>
           <p class="version">&nbsp;--&nbsp;乐速科技&nbsp;--&nbsp;</p>
         </div>
@@ -30,6 +30,7 @@
 </template>
 
 <script>
+//  import {speckText} from '../config/Tools';
   export default {
     name: 'login',
     data () {
@@ -40,9 +41,11 @@
     },
     mounted () {
       setTimeout(() => { this.show = true; }, 0);
+//      speckText('欢迎使用乐速科技WMS 4.0');
     },
     methods: {
       login () {
+//        speckText('正在登陆...');
         this.loading = true;
         this.show = false;
       },
