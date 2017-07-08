@@ -23,12 +23,12 @@
             ref="ref_form"
             :rules="rule.form">
             <el-form-item prop="username">
-              <input type="text" v-model="form.username" placeholder="用户名">
+              <input type="text" v-model="form.username" placeholder="用户名" tabindex="1">
             </el-form-item>
             <el-form-item prop="password">
-              <input type="password" v-model="form.password" placeholder="密码">
+              <input type="password" v-model="form.password" placeholder="密码" tabindex="2">
             </el-form-item>
-            <button id="login-button" @click="login" :disabled="!show">登陆</button>
+            <button id="login-button" @click="login" :disabled="!show" tabindex="3">登陆</button>
           </el-form>
           <p class="version">&nbsp;--&nbsp;乐速科技&nbsp;--&nbsp;</p>
         </div>
