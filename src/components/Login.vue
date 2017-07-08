@@ -232,7 +232,7 @@
   
   .bg-bubbles li {
     /*border-radius: 50%;*/
-    /*background-image: url('../assets/logo.png');*/
+    background-image: none;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -331,7 +331,24 @@
     opacity: 0;
     animation: none;
     &:nth-child(7) {
+      animation: loading 1.5s forwards;
+      /*background-image: url('../assets/logo.png');*/
+    }
+  }
+  @keyframes loading {
+    0% {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.5);
+    }
+    80% {
+      opacity: 0;
+      border-radius: 50%;
+      transform: translate(-50%, -50%) scale(0.01);
+    }
+    100% {
       opacity: 1;
+      border-radius: 50%;
+      transform: translate(-50%, -50%) scale(10);
     }
   }
   
@@ -380,7 +397,7 @@
   }
   
   .fade-leave-to {
-    animation: fade-leave 2s forwards;
+    animation: fade-leave 1.5s forwards;
   }
   
   @keyframes fade-leave {

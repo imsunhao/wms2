@@ -69,8 +69,8 @@ export default new Router({
         },
       ],
       beforeEnter: (to, from, next) => {
-        console.log(from);
-        setTimeout(() => { console.log('身份验证成功！'); next(); }, 10);
+        console.log('开始验证身份...');
+        setTimeout(() => { console.log('身份验证成功！开始加载路由...'); next(); }, 10);
       },
     },
   ],

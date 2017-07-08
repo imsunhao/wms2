@@ -22,15 +22,24 @@
 </template>
 
 <script>
-  export default {
-    name: 'wms',
-    data () {
-      return {
-        loading: false,
-        error: false,
-      };
-    },
-  };
+   import {speckText} from '../config/Tools';
+
+export default {
+     name: 'wms',
+     beforeRouteEnter (to, from, next) {
+      // 在渲染该组件的对应路由被 confirm 前调用
+      // 不！能！获取组件实例 `this`
+      // 因为当钩子执行前，组件实例还没被创建
+       speckText('乐速科技 WMS4.0 , 系统连接正常！');
+       setTimeout(() => { console.log('页面加载完成!\n等待上一个页面动画完成中...'); next(); }, 1500);
+     },
+     data () {
+       return {
+         loading: false,
+         error: false,
+       };
+     },
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
