@@ -26,7 +26,7 @@
               <input type="text" v-model="form.username" placeholder="用户名" tabindex="1">
             </el-form-item>
             <el-form-item prop="password">
-              <input type="password" v-model="form.password" placeholder="密码" tabindex="2">
+              <input type="password" v-model="form.password" placeholder="密码" tabindex="2" autocomplete="off">
             </el-form-item>
             <button id="login-button" @click="login" :disabled="!show" tabindex="3">登陆</button>
           </el-form>
@@ -41,6 +41,7 @@
   import ElForm from '../../node_modules/element-ui/packages/form/src/form';
 // import {speckText} from '../config/Tools';
   import Validate from '../config/Validate/Login';
+  import route from '../router';
   export default {
     components: {ElForm},
     name: 'login',
@@ -63,6 +64,7 @@
       login () {
         this.$refs['ref_form'].validate(valid => {
           if (valid) {
+            route.push({ path: '/wms/home' });
             this.loading = true;
             this.show = false;
           } else {
