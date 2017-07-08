@@ -43,10 +43,32 @@
   html {
     overflow: hidden;
     height: 100vh;
+    font-size:62.5%; /* 10÷16=62.5% */
   }
   
   body{
     margin: 0;
     padding: 0;
+    font-size:1.2rem ; /* 12÷10=1.2 */
+  }
+  
+  .login{
+    .inner{
+     .form {
+       .el-form-item {
+         width: 300px;
+         margin: 0 auto;
+         .el-form-item__error {
+           top: 0;
+           left: 100%;
+           text-align: left;
+           line-height: 20px;
+           width:50px;
+           height: 43px;
+           display: block;
+         }
+       }
+     }
+    }
   }
 </style>

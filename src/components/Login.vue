@@ -1,5 +1,5 @@
 <template>
-  <el-row class="wrapper">
+  <el-row class="login">
     <!--<router-link to="wms/home">wms</router-link>-->
     <ul :class="[{ loading: loading }, 'bg-bubbles']">
       <li></li>
@@ -17,11 +17,19 @@
       <transition name="fade">
         <div v-if="show" class="inner">
           <h1>WMS 4.0</h1>
-          <div class="form">
-            <input type="text" placeholder="用户名">
-            <input type="password" placeholder="密码">
-            <button type="submit" id="login-button" @click="login" :disabled="!show">登陆</button>
-          </div>
+          <el-form
+            :model="form"
+            class="form"
+            ref="ref_form"
+            :rules="rule.form">
+            <el-form-item prop="username">
+              <input type="text" v-model="form.username" placeholder="用户名">
+            </el-form-item>
+            <el-form-item prop="password">
+              <input type="password" v-model="form.password" placeholder="密码">
+            </el-form-item>
+            <button id="login-button" @click="login" :disabled="!show">登陆</button>
+          </el-form>
           <p class="version">&nbsp;--&nbsp;乐速科技&nbsp;--&nbsp;</p>
         </div>
       </transition>
@@ -30,11 +38,19 @@
 </template>
 
 <script>
-//  import {speckText} from '../config/Tools';
+  import ElForm from '../../node_modules/element-ui/packages/form/src/form';
+// import {speckText} from '../config/Tools';
+  import Validate from '../config/Validate/Login';
   export default {
+    components: {ElForm},
     name: 'login',
     data () {
       return {
+        form: {
+          password: '',
+          username: '',
+        },
+        rule: Validate,
         loading: false,
         show: false,
       };
@@ -45,9 +61,15 @@
     },
     methods: {
       login () {
+        this.$refs['ref_form'].validate(valid => {
+          if (valid) {
+            this.loading = true;
+            this.show = false;
+          } else {
+            return false;
+          }
+        });
 //        speckText('正在登陆...');
-        this.loading = true;
-        this.show = false;
       },
     },
   };
@@ -61,6 +83,7 @@
     padding: 0;
     font-weight: 300;
   }
+  
   body {
     font-family: 'Source Sans Pro', sans-serif;
     color: white;
@@ -93,13 +116,13 @@
     }
   }
   
-  .wrapper {
-    height:100vh;
+  .login {
+    height: 100vh;
     background: #50a3a2;
     background: linear-gradient(to bottom right, #50a3a2 0%, #53e3a6 100%);
   }
   
-  .wrapper.form-success .container h1 {
+  .login.form-success .container h1 {
     -webkit-transform: translateY(85px);
     -ms-transform: translateY(85px);
     transform: translateY(85px);
@@ -119,7 +142,7 @@
     height: 400px;
     text-align: center;
     
-    .inner{
+    .inner {
       max-width: 600px;
       margin: 0 auto;
       h1 {
@@ -130,8 +153,29 @@
         transition-timing-function: ease-in-put;
         font-weight: 200;
       }
+  
+      button {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        outline: 0;
+        background-color: white;
+        border: 0;
+        padding: 10px 15px;
+        color: #53e3a6;
+        border-radius: 3px;
+        width: 250px;
+        cursor: pointer;
+        font-size: 18px;
+        -webkit-transition-duration: 0.25s;
+        transition-duration: 0.25s;
+      }
+      button:hover {
+        background-color: #f5f7f9;
+      }
     }
   }
+  
   .form {
     padding: 20px 0;
     position: relative;
@@ -163,26 +207,18 @@
       width: 300px;
       color: #53e3a6;
     }
-    button {
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none;
-      outline: 0;
-      background-color: white;
-      border: 0;
-      padding: 10px 15px;
-      color: #53e3a6;
-      border-radius: 3px;
-      width: 250px;
-      cursor: pointer;
-      font-size: 18px;
-      -webkit-transition-duration: 0.25s;
-      transition-duration: 0.25s;
-    }
-    button:hover {
-      background-color: #f5f7f9;
+    .is-error{
+      input{
+        border: 1px solid rgba(238, 53, 42, 0.4);
+        background-color: rgba(238, 53, 42, 0.2);
+      }
+      input:focus{
+        border: 1px solid rgba(238, 53, 42, 0.4);
+        background-color: rgba(238, 53, 42, 0.2);
+      }
     }
   }
+  
   .bg-bubbles {
     position: absolute;
     top: 0;
@@ -191,6 +227,7 @@
     height: 100%;
     z-index: 0;
   }
+  
   .bg-bubbles li {
     /*border-radius: 50%;*/
     /*background-image: url('../assets/logo.png');*/
@@ -205,12 +242,12 @@
     background-color: rgba(255, 255, 255, 0.15);
     transition: 1s;
     transition-timing-function: linear;
-    &:nth-child(2n){
+    &:nth-child(2n) {
       bottom: -200px;
       animation: square 25s infinite;
       
     }
-    &:nth-child(2n+1){
+    &:nth-child(2n+1) {
       top: -200px;
       animation: square2 25s infinite;
     }
@@ -284,14 +321,14 @@
       animation-delay: 11s;
     }
   }
-
-  .wrapper .loading li{
+  
+  .login .loading li {
     left: 50%;
     top: 50%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
     opacity: 0;
-    animation:none;
-    &:nth-child(7){
+    animation: none;
+    &:nth-child(7) {
       opacity: 1;
     }
   }
@@ -310,6 +347,7 @@
       transform: translateY(0);
     }
   }
+  
   @keyframes square {
     0% {
       -webkit-transform: translateY(0);
@@ -328,17 +366,21 @@
   .fade-enter-active {
     transition: opacity .5s
   }
-  .fade-enter  /* .fade-leave-active in <2.1.8 */
+  
+  .fade-enter /* .fade-leave-active in <2.1.8 */
   {
     opacity: 0
   }
-  .fade-leave-active{
+  
+  .fade-leave-active {
     transition: 1s;
     transform-origin: bottom;
   }
-  .fade-leave-to{
+  
+  .fade-leave-to {
     animation: fade-leave 2s forwards;
   }
+  
   @keyframes fade-leave {
     0% {
       transform: rotateX(0deg) translateY(0px);
@@ -351,9 +393,10 @@
     }
   }
   
-  .version{
+  .version {
     color: #e4e4e4;
     font-size: 1em;
     text-align: center;
   }
+  
 </style>

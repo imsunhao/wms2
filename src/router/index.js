@@ -38,7 +38,7 @@ const Pane = () => ({
 });
 
 const Home = () => ({
-  component: import('@/components/1_about/home.vue'),
+  component: import('@/components/1_about/Home.vue'),
   loading: LoadingComp,
   error: ErrorComp,
   delay: time.delay,
