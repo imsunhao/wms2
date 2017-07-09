@@ -39,6 +39,7 @@ const app = express()
 
 const index = require('./routes/index')                                //父系统
 const imageServer = require('./routes/imageServer')                    //图片服务器
+const wms4 = require('./routes/wms4Mock')                               //wms 4.0 虚拟接口
 /*
  /*****************************************************************************/
 
@@ -169,11 +170,11 @@ app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))   //图标
 app.use(logger('combined', {stream: accessLogStream}))            //日志
 
 // app.use(bodyParser({uploadDir:'./public/static/images/users/'}));
-app.use(bodyParser.json({type: 'application/*+json'}))             //请求解析 为json格式
-// app.use(express.bodyParser('./public/static/images/users/'));    //图片路径
+app.use(bodyParser.json({type: 'application/*+json'}))            //请求解析 为json格式
+// app.use(express.bodyParser('./public/static/images/users/'));  //图片路径
 app.use(bodyParser.urlencoded({extended: false}))
-app.use(cookieParser())                                            //请求解析 cookie
-app.use(express.static(path.join(__dirname, 'public')))            //加载public资源
+app.use(cookieParser())                                           //请求解析 cookie
+app.use(express.static(path.join(__dirname, 'public')))           //加载public资源
 /*
  /*****************************************************************************/
 
@@ -216,25 +217,25 @@ app.use(session({
  /*     功能           见注释
  /*
  */
-app.use(function (req, res, next) {
-  //demo req.originalUrl.match(/\/article\/read\/.*/)
-  if (/^.+\./.test(req.originalUrl) || /^\/page\/.+/.test(req.originalUrl)) return next()
-  /*<debug>*/
-  console.log('---------启用验证！------------------')
-  if (typeof req.session.user !== 'undefined')
-    console.log(req.session.user.rmsUser.ruUserName)
-  else {
-    console.log('未登录用户')
-  }
-  console.log(req.originalUrl)
-  // console.log("--------------------------------------");
-  /*</debug>*/
-  if (req.session.user || req.originalUrl == '/users/login') {
-    next()
-  } else {
-    return res.redirect('/users/login')
-  }
-})
+// app.use(function (req, res, next) {
+//   //demo req.originalUrl.match(/\/article\/read\/.*/)
+//   if (/^.+\./.test(req.originalUrl) || /^\/page\/.+/.test(req.originalUrl)) return next()
+//   /*<debug>*/
+//   console.log('---------启用验证！------------------')
+//   if (typeof req.session.user !== 'undefined')
+//     console.log(req.session.user.rmsUser.ruUserName)
+//   else {
+//     console.log('未登录用户')
+//   }
+//   console.log(req.originalUrl)
+//   // console.log("--------------------------------------");
+//   /*</debug>*/
+//   if (req.session.user || req.originalUrl == '/users/login') {
+//     next()
+//   } else {
+//     return res.redirect('/users/login')
+//   }
+// })
 
 // function a(test) {
 //     return /^.+\./.test(test)||/^\/page\/.+/.test(test)
@@ -253,6 +254,9 @@ app.use(function (req, res, next) {
 /*主页*/
 app.use('/', index)
 
+/*wms Mock*/
+app.use('/wms4', wms4)
+
 // error handler analysis
 app.use(function (req, res, next) {
   let err = new Error('Not Found')
@@ -268,7 +272,6 @@ app.use(function (err, req, res, next) {
   // res.locals.error = req.app.get('env') === 'development' ? err : {};
   // render the error page
   // res.status(err.status || 500);
-
   res.send({status: err.status, model: err.message})
 })
 
