@@ -1,4 +1,4 @@
 module.exports = {
-  name: 'wms_cg_web',
-  port: 8080
+  name: 'wms4',
+  port: 13000
 }
