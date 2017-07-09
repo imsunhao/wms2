@@ -14,22 +14,32 @@
       <li></li>
     </ul>
     <div class="container">
-      <transition name="fade">
+      <transition name="fade" mode="out-in">
         <div v-if="show" class="inner">
-          <h1>WMS 4.0</h1>
-          <el-form
-            :model="form"
-            class="form"
-            ref="ref_form"
-            :rules="rule.form">
-            <el-form-item prop="username">
-              <input type="text" v-model="form.username" placeholder="用户名" tabindex="1">
-            </el-form-item>
-            <el-form-item prop="password">
-              <input type="password" v-model="form.password" placeholder="密码" tabindex="2" autocomplete="off">
-            </el-form-item>
-            <button id="login-button" @click="login" :disabled="!show" tabindex="3">登陆</button>
-          </el-form>
+          <h1 @click="wifi=!wifi">WMS 4.0</h1>
+          <div class="form">
+          <transition name="wifi">
+              <el-form
+                v-if="!wifi"
+                key="main"
+                :model="form"
+                ref="ref_form"
+                :rules="rule.form">
+                <el-form-item prop="username">
+                  <input type="text" v-model="form.username" placeholder="用户名" tabindex="1">
+                </el-form-item>
+                <el-form-item prop="password">
+                  <input type="password" v-model="form.password" placeholder="密码" tabindex="2" autocomplete="off">
+                </el-form-item>
+                <button id="login-button" @click="login" :disabled="!show" tabindex="3">登陆</button>
+              </el-form>
+              <el-form
+                key="wifi"
+                v-if="wifi">
+                asdgasdgsad
+              </el-form>
+          </transition>
+          </div>
           <p class="version">&nbsp;--&nbsp;乐速科技&nbsp;--&nbsp;</p>
         </div>
       </transition>
@@ -51,6 +61,7 @@
           password: '',
           username: '',
         },
+        wifi: false,
         rule: Validate,
         loading: false,
         show: false,
@@ -182,6 +193,7 @@
     padding: 20px 0;
     position: relative;
     z-index: 2;
+    min-height:190px;
     input {
       -webkit-appearance: none;
       -moz-appearance: none;
@@ -399,7 +411,7 @@
   .fade-leave-to {
     animation: fade-leave 1.5s forwards;
   }
-  
+
   @keyframes fade-leave {
     0% {
       transform: rotateX(0deg) translateY(0px);
@@ -409,6 +421,44 @@
     }
     100% {
       transform: rotateX(60deg) translateY(-600px);
+    }
+  }
+  
+  .wifi-enter-active,.wifi-leave-active {
+    position: absolute;
+    width: 600px;
+    transition: 2s;
+  }
+  .wifi-enter-active{
+    opacity: 0;
+  }
+  .wifi-leave-active{
+    opacity: 1;
+  }
+  
+  .wifi-enter-to,.wifi-leave-to {
+    animation: wifi-enter 1.5s forwards;
+    opacity: 1;
+  }
+  .wifi-leave-to {
+    animation: wifi-leave 1.5s forwards;
+    opacity: 0;
+  }
+
+  @keyframes wifi-enter{
+    0% {
+      transform: rotateY(180deg);
+    }
+    100% {
+      transform: rotateY(0deg);
+    }
+  }
+  @keyframes wifi-leave{
+    0% {
+      transform: rotateY(-180deg);
+    }
+    100% {
+      transform: rotateY(0deg);
     }
   }
   
