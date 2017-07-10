@@ -39,7 +39,7 @@ const app = express()
 
 const index = require('./routes/index')                                //父系统
 const imageServer = require('./routes/imageServer')                    //图片服务器
-const wms4 = require('./routes/wms4Mock')                               //wms 4.0 虚拟接口
+const wms4 = require('./routes/wms4Mock')                              //wms 4.0 虚拟接口
 /*
  /*****************************************************************************/
 
@@ -132,6 +132,18 @@ mongoose.Promise = global.Promise
 /*
  /*****************************************************************************/
 
+
+
+/*****************************************************************************/
+/*
+ /* 启用webSocket通讯协议
+ /*     功能            长连接-通讯   核心
+ /*     网址：  https://github.com/sitegui/nodejs-websocket
+ */
+const expressWs = require('express-ws')(app);
+const util = require('util');
+/*
+ /*****************************************************************************/
 
 /*****************************************************************************/
 /*
@@ -256,6 +268,17 @@ app.use('/', index)
 
 /*wms Mock*/
 app.use('/wms4', wms4)
+
+
+/*webSocket*/
+app.ws('/ws', function(ws, req) {
+  util.inspect(ws);
+  ws.on('message', function(msg) {
+    console.log('_message');
+    console.log(msg);
+    ws.send('echo:' + msg);
+  });
+})
 
 // error handler analysis
 app.use(function (req, res, next) {
