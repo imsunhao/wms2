@@ -43,13 +43,11 @@
   html {
     overflow: hidden;
     height: 100vh;
-    font-size:62.5%; /* 10÷16=62.5% */
   }
   
   body{
     margin: 0;
     padding: 0;
-    font-size:1.2rem ; /* 12÷10=1.2 */
   }
   
   .login{
