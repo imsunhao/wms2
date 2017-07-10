@@ -31,12 +31,12 @@
                 <el-form-item prop="password">
                   <input type="password" v-model="form.password" placeholder="密码" tabindex="2" autocomplete="off">
                 </el-form-item>
-                <button id="login-button" @click="login" :disabled="!show" tabindex="3">登陆</button>
+                <button id="login-button" @click.prevent="login" :disabled="!show" tabindex="3">登陆</button>
               </el-form>
               <el-form
                 key="wifi"
                 v-if="wifi">
-                asdgasdgsad
+                <qrcode :value="http" :options="{ foreground: '#50a3a2',size:150 }"></qrcode>
               </el-form>
           </transition>
           </div>
@@ -52,6 +52,8 @@
 // import {speckText} from '../config/Tools';
   import Validate from '../config/Validate/Login';
   import route from '../router';
+  import dev from '../../config';
+  
   export default {
     components: {ElForm},
     name: 'login',
@@ -65,10 +67,20 @@
         rule: Validate,
         loading: false,
         show: false,
+        http: '',
       };
     },
     mounted () {
       setTimeout(() => { this.show = true; }, 0);
+      this.$http
+      .get('/wms4/wifi')
+      .then(response => {
+        // get body data
+        this.http = `http://${response.body}:${dev.dev.port}/`;
+      }, response => {
+        // error callback
+        console.log(response);
+      });
 //      speckText('欢迎使用乐速科技WMS 4.0');
     },
     methods: {
@@ -347,6 +359,7 @@
       /*background-image: url('../assets/logo.png');*/
     }
   }
+  
   @keyframes loading {
     0% {
       opacity: 0;

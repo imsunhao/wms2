@@ -4,6 +4,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import router from './router';
 import ElementUI from 'element-ui';
+import VueQrcode from 'vue-qrcode';
 import 'element-ui/lib/theme-default/index.css';
 import App from './App.vue';
 
@@ -18,6 +19,7 @@ Vue.use(ElementUI);
 
 Vue.component('loading-comp', LoadingComp);
 Vue.component('error-comp', ErrorComp);
+Vue.component('qrcode', VueQrcode);
 
 const store = new Vuex.Store({
   state: {

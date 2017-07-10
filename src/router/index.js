@@ -45,6 +45,14 @@ const Home = () => ({
   timeout: time.timeout,
 });
 
+const QRCode = () => ({
+  component: import('@/components/3/QRCode.vue'),
+  loading: LoadingComp,
+  error: ErrorComp,
+  delay: time.delay,
+  timeout: time.timeout,
+});
+
 export default new Router({
   routes: [
     {
@@ -62,6 +70,10 @@ export default new Router({
         {
           path: 'pane',
           component: Pane,
+        },
+        {
+          path: 'qrcode',
+          component: QRCode,
         },
         {
           path: 'user/:id',
