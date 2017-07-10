@@ -4,7 +4,7 @@ const proxy = '/' + server.name + '/**'
 module.exports = {
   build: {
     env: require('./prod.env'),
-    index: path.resolve(__dirname, '../server/views/index.ejs'),
+    index: path.resolve(__dirname, '../server/public/index.html'),
     assetsRoot: path.resolve(__dirname, '../server/public'),
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',

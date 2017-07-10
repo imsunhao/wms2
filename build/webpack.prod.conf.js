@@ -33,7 +33,7 @@ var webpackConfig = merge(baseWebpackConfig, {
       compress: {
         warnings: false,
         drop_debugger: true,
-        drop_console: true
+        drop_console: false
       },
       sourceMap: true
     }),
@@ -85,11 +85,11 @@ var webpackConfig = merge(baseWebpackConfig, {
       name: 'manifest',
       chunks: ['vendor']
     }),
-    // copy custom static assets
+    // copy image assets
     new CopyWebpackPlugin([
       {
-        from: path.resolve(__dirname, '../static'),
-        to: config.build.assetsSubDirectory,
+        from: path.resolve(__dirname, '../src/assets'),
+        to: config.build.assetsSubDirectory + '/image',
         ignore: ['.*']
       }
     ])
