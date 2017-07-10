@@ -17,6 +17,7 @@
       <transition name="fade" mode="out-in">
         <div v-if="show" class="inner">
           <h1 @click="wifi=!wifi">WMS 4.0</h1>
+          <p class="version">&nbsp;--&nbsp;乐速科技&nbsp;--&nbsp;</p>
           <div class="form">
           <transition name="wifi">
               <el-form
@@ -40,7 +41,6 @@
               </el-form>
           </transition>
           </div>
-          <p class="version">&nbsp;--&nbsp;乐速科技&nbsp;--&nbsp;</p>
         </div>
       </transition>
     </div>
@@ -202,6 +202,8 @@
   }
   
   .form {
+    width: 360px;
+    margin: 0 auto;
     padding: 20px 0;
     position: relative;
     z-index: 2;
@@ -424,11 +426,10 @@
   .fade-leave-to {
     animation: fade-leave 1.5s forwards;
   }
-
   
   .wifi-enter-active,.wifi-leave-active {
     position: absolute;
-    width: 600px;
+    width: 360px;
     transition: 2s;
   }
   .wifi-enter-active{
@@ -479,6 +480,8 @@
     color: #e4e4e4;
     font-size: 1em;
     text-align: center;
+    margin-bottom: -15px;
+    margin-top: -6px;
   }
   
 </style>

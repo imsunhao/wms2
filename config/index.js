@@ -28,7 +28,7 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      [proxy]: {
+      wms4: {
         target: 'http://127.0.0.1:' + server.port + '/',
         secure: false
       }
