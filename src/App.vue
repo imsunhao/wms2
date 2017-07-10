@@ -49,6 +49,14 @@
     margin: 0;
     padding: 0;
   }
+
+  @media screen and (max-width: 800px) {
+    html {
+      overflow-x: hidden;
+      overflow-y: scroll;
+      height: auto;
+    }
+  }
   
   .login{
     .inner{
