@@ -167,7 +167,7 @@
       testHttp () {
         // GET /someUrl
         this.$http
-        .get('/wms_cg_web/auth/test/1234567')
+        .get('/wms4/12')
         .then(response => {
           // get body data
           console.log(response.body);

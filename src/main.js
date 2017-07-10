@@ -67,6 +67,7 @@ const store = new Vuex.Store({
         shopId: '10333',
       },
     ],
+    http: '',
   },
   getters: {
     doneTodos: state => {
@@ -76,6 +77,9 @@ const store = new Vuex.Store({
   mutations: {
     increment (state, payload) {
       state.count += payload.amount;
+    },
+    changeHttp (state, payload) {
+      state.http = payload.amount;
     },
     openLoading (state, payload) {
       state.loading['s' + payload.amount] = true;

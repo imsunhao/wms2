@@ -51,6 +51,7 @@
   import ElForm from '../../node_modules/element-ui/packages/form/src/form';
 // import {speckText} from '../config/Tools';
   import Validate from '../config/Validate/Login';
+  import { mapState } from 'vuex';
   import route from '../router';
   import dev from '../../config';
   
@@ -67,7 +68,6 @@
         rule: Validate,
         loading: false,
         show: false,
-        http: '',
       };
     },
     mounted () {
@@ -82,6 +82,9 @@
         console.log(response);
       });
 //      speckText('欢迎使用乐速科技WMS 4.0');
+    },
+    computed: {
+      ...mapState(['http']),
     },
     methods: {
       login () {
