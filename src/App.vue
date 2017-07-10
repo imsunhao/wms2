@@ -121,4 +121,33 @@
     }
   }
   
+  .__table{
+    position: relative;
+    .el-form-item{
+      margin-right: 0 !important;
+      .el-form-item__content{
+        width:calc(100% - 70px);
+      }
+    }
+    .__table_button{
+      position: absolute;
+      z-index: 4;
+      width: 80px;
+      height: 40px;
+      border: none;
+      outline: none;
+      background: rgba(0,0,0,0);
+    }
+    .__table_index_button{
+      position: absolute;
+      width: 100%;
+      top: 0;
+      left: 0;
+      height: 100%;
+      border: none;
+      background: rgba(0,0,0,0);
+      outline: none;
+    }
+  }
+  
 </style>
