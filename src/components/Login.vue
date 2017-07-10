@@ -425,17 +425,6 @@
     animation: fade-leave 1.5s forwards;
   }
 
-  @keyframes fade-leave {
-    0% {
-      transform: rotateX(0deg) translateY(0px);
-    }
-    80% {
-      transform: rotateX(60deg) translateY(0px);
-    }
-    100% {
-      transform: rotateX(60deg) translateY(-600px);
-    }
-  }
   
   .wifi-enter-active,.wifi-leave-active {
     position: absolute;
@@ -472,6 +461,17 @@
     }
     100% {
       transform: rotateY(0deg);
+    }
+  }
+  @keyframes fade-leave{
+    0% {
+      transform: rotateX(0deg) translateY(0px);
+    }
+    80% {
+      transform: rotateX(60deg) translateY(0px);
+    }
+    100% {
+      transform: rotateX(60deg) translateY(-600px);
     }
   }
   

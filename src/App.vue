@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <!--<transition>-->
-    <router-view></router-view>
-    <!--</transition>-->
+    <transition name="fadeApp">
+    <router-view class="appRouter"></router-view>
+    </transition>
   </div>
 </template>
 
@@ -69,4 +69,55 @@
      }
     }
   }
+
+  #app{
+    position: relative;
+    .appRouter{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+    }
+  }
+  
+  .fadeApp-enter-active {
+    transition: 1s;
+  }
+
+  .fadeApp-enter-to {
+    animation: fadeApp-enter 1s forwards;
+  }
+  
+  .fadeApp-leave-active {
+    transition: 1s;
+  }
+
+  .fadeApp-leave-to {
+    animation: fadeApp-leave .7s forwards;
+  }
+  
+  @keyframes fadeApp-enter{
+    0% {
+      transform: scaleY(0) scaleX(0);
+    }
+    40% {
+      transform: scaleY(0.1) scaleX(1);
+    }
+    100% {
+      transform: scaleY(1) scaleX(1);
+    }
+  }
+  
+  @keyframes fadeApp-leave{
+    0% {
+      transform: scaleY(1) scaleX(1);
+    }
+    60% {
+      transform: scaleY(0.1) scaleX(1);
+    }
+    100% {
+      transform: scaleY(0) scaleX(0);
+    }
+  }
+  
 </style>
