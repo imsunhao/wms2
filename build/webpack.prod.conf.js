@@ -32,7 +32,7 @@ var webpackConfig = merge(baseWebpackConfig, {
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false,
-        drop_debugger: true,
+        drop_debugger: false,
         drop_console: false
       },
       sourceMap: true
