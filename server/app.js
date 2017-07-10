@@ -140,8 +140,8 @@ mongoose.Promise = global.Promise
  /*     功能            长连接-通讯   核心
  /*     网址：  https://github.com/sitegui/nodejs-websocket
  */
-const expressWs = require('express-ws')(app);
-const util = require('util');
+const expressWs = require('express-ws')(app)
+const util = require('util')
 /*
  /*****************************************************************************/
 
@@ -165,7 +165,7 @@ app.set('view engine', 'ejs')                          //模板为ejs模板
  */
 mongoose.connect('mongodb://' + mongoDBConfig.user + ':' + mongoDBConfig.password + '@'
   + mongoDBConfig.host + ':' + mongoDBConfig.port + '/' + mongoDBConfig.database + '?authSource='
-  + mongoDBConfig.authSource, {native_parser: true, useMongoClient: true}); //网路数据库
+  + mongoDBConfig.authSource, {native_parser: true, useMongoClient: true}) //网路数据库
 mongoose.connection.on('error', console.error.bind(console, '连接数据库失败'))
 /*
  /*****************************************************************************/
@@ -178,7 +178,7 @@ mongoose.connection.on('error', console.error.bind(console, '连接数据库失�
  /*     功能           见注释
  /*
  */
-app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))   //图标
+app.use(favicon(path.join(__dirname, 'public', 'static', 'image', 'favicon.ico')))   //图标
 app.use(logger('combined', {stream: accessLogStream}))            //日志
 
 // app.use(bodyParser({uploadDir:'./public/static/images/users/'}));
@@ -269,15 +269,14 @@ app.use('/', index)
 /*wms Mock*/
 app.use('/wms4', wms4)
 
-
 /*webSocket*/
-app.ws('/ws', function(ws, req) {
-  util.inspect(ws);
-  ws.on('message', function(msg) {
-    console.log('_message');
-    console.log(msg);
-    ws.send('echo:' + msg);
-  });
+app.ws('/ws', function (ws, req) {
+  util.inspect(ws)
+  ws.on('message', function (msg) {
+    console.log('_message')
+    console.log(msg)
+    ws.send('echo:' + msg)
+  })
 })
 
 // error handler analysis
