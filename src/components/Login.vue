@@ -37,7 +37,7 @@
               <el-form
                 key="wifi"
                 v-if="wifi">
-                <qrcode :value="`http://${http.ip}:${http.ip.port}/`"
+                <qrcode :value="`http://${http.ip}:${http.port}/`"
                         :options="{ foreground: '#50a3a2',size:150 }"></qrcode>
               </el-form>
             </transition>
@@ -49,10 +49,9 @@
 </template>
 
 <script>
-  import ElForm from '../../node_modules/element-ui/packages/form/src/form';
   import { mapState } from 'vuex';
-  // import {speckText} from '../config/Tools';
-  import Validate from '../config/Validate/Login';
+  import {speckText} from '../config/Tools';
+  import Validate from '../config/Validate/V_Login';
   import route from '../router';
   import dev from '../../config';
   
@@ -60,22 +59,20 @@
   import { MutationsMethods } from '../config/Mutations';
   
   export default {
-    components: {ElForm},
     name: 'login',
     data () {
       return {
-        form: {
-          password: '',
-          username: '',
-        },
         wifi: false,
         rule: Validate,
         loading: false,
         show: false,
+        form: {
+          username: '',
+          password: '',
+        },
       };
     },
     mounted () {
-      setTimeout(() => { this.show = true; }, 0);
       this.$http.get('/wms4/wifi')
       .then(response => {
         // get body data
@@ -87,23 +84,38 @@
         // error callback
         console.log(response);
       });
-//      speckText('欢迎使用乐速科技WMS 4.0');
+      this.form = this.user;
+//      this.form.password = '';
+      this.show = true;
+      speckText('欢迎使用乐速科技WMS 4.0');
     },
     computed: {
-      ...mapState(['http']),
+      ...mapState(['http', 'user']),
     },
     methods: {
       login () {
         this.$refs['ref_form'].validate(valid => {
           if (valid) {
-            route.push({path: '/wms/home'});
-            this.loading = true;
-            this.show = false;
+            this.$http.post('/wms4/users/Login', this.form)
+            .then(response => {
+              // get body data
+              if (response.body.status < 10000) {
+                this.f(1, response.body.data);
+                this.loading = true;
+                this.show = false;
+                route.push({path: '/wms/home'});
+              } else {
+  
+              }
+            }, response => {
+              // error callback
+              console.log(response);
+            });
+//            speckText('正在登陆...');
           } else {
             return false;
           }
         });
-//        speckText('正在登陆...');
       },
       ...MutationsMethods(Mutations),
     },

@@ -71,6 +71,10 @@ const store = new Vuex.Store({
       ip: '',
       port: 0,
     },
+    user: {
+      username: '',
+      password: '',
+    },
   },
   getters: {
     doneTodos: state => {
@@ -81,8 +85,11 @@ const store = new Vuex.Store({
     increment (state, payload) {
       state.count += payload.amount;
     },
-    changeHttp (state, payload) {
+    updateHttp (state, payload) {
       state.http = payload.amount;
+    },
+    updateUser (state, payload) {
+      state.user = payload.amount;
     },
     openLoading (state, payload) {
       state.loading['s' + payload.amount] = true;

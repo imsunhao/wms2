@@ -35,7 +35,7 @@
       // 在渲染该组件的对应路由被 confirm 前调用
       // 不！能！获取组件实例 `this`
       // 因为当钩子执行前，组件实例还没被创建
-      speckText('乐速科技 WMS4.0 , 系统连接正常！');
+      speckText('登录成功！');
       setTimeout(() => {
         console.log('页面加载完成!\n等待上一个页面动画完成中...');
         next();
@@ -49,14 +49,15 @@
       };
     },
     computed: {
-      ...mapState(['http']),
+      ...mapState(['http', 'user']),
     },
     mounted () {
-      let userName = 'imsunhao';
+      speckText(`欢迎${this.user.role},${this.user.nickname}!`);
+      let nickname = this.user.nickname;
       const socket = io.connect('http://' + this.http.ip + ':13000/');
       socket.on('connect', function () {
-        console.log(userName);
-        socket.emit('join', userName);
+        console.log(nickname);
+        socket.emit('join', nickname);
       });
     },
   };

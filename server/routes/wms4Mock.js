@@ -27,4 +27,8 @@ if(conf.wifi){
   })
 }
 
+
+require('./Mock/users')(router);
+
+
 module.exports = router
