@@ -51,7 +51,7 @@
   import ElForm from '../../node_modules/element-ui/packages/form/src/form';
 // import {speckText} from '../config/Tools';
   import Validate from '../config/Validate/Login';
-  import { mapState } from 'vuex';
+  import { mapState, mapGetters } from 'vuex';
   import route from '../router';
   import dev from '../../config';
   
@@ -76,6 +76,7 @@
       .get('/wms4/wifi')
       .then(response => {
         // get body data
+        this.changeHttp();
         this.http = `http://${response.body}:${dev.dev.port}/`;
       }, response => {
         // error callback
@@ -85,6 +86,7 @@
     },
     computed: {
       ...mapState(['http']),
+      ...mapGetters(['changeHttp']),
     },
     methods: {
       login () {

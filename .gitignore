@@ -6,7 +6,8 @@ yarn-debug.log*
 yarn-error.log*
 
 /server/public
-/server/views
+/server/config
+/server/log
 
 .idea/
 
@@ -14,5 +15,3 @@ yarn-error.log*
 realServerConfig.js
 DBConfig.js
 
-server/config/
-server/log/

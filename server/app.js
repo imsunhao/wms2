@@ -178,12 +178,10 @@ mongoose.connection.on('error', console.error.bind(console, '连接数据库失�
  /*     功能           见注释
  /*
  */
-app.use(favicon(path.join(__dirname, 'public', 'static', 'image', 'favicon.ico')))   //图标
+app.use(favicon(path.join(__dirname, 'public', 'image', 'favicon.ico')))   //图标
 app.use(logger('combined', {stream: accessLogStream}))            //日志
 
-// app.use(bodyParser({uploadDir:'./public/static/images/users/'}));
 app.use(bodyParser.json({type: 'application/*+json'}))            //请求解析 为json格式
-// app.use(express.bodyParser('./public/static/images/users/'));  //图片路径
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(cookieParser())                                           //请求解析 cookie
 app.use(express.static(path.join(__dirname, 'public')))           //加载public资源

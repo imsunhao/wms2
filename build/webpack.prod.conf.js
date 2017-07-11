@@ -35,7 +35,7 @@ var webpackConfig = merge(baseWebpackConfig, {
         drop_debugger: false,
         drop_console: false
       },
-      sourceMap: true
+      sourceMap: false
     }),
     // extract css into its own file
     new ExtractTextPlugin({
@@ -85,12 +85,11 @@ var webpackConfig = merge(baseWebpackConfig, {
       name: 'manifest',
       chunks: ['vendor']
     }),
-    // copy image assets
+    // copy custom static assets
     new CopyWebpackPlugin([
       {
-        from: path.resolve(__dirname, '../src/assets'),
-        to: config.build.assetsSubDirectory + '/image',
-        ignore: ['.*']
+        from: path.resolve(__dirname, '../src/static'),
+        to: config.build.assetsServerRoot,
       }
     ])
   ]
