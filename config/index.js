@@ -1,11 +1,10 @@
 const path = require('path')
-const server = require('./realServerConfig')
-const proxy = '/' + server.name + '/**'
 module.exports = {
   build: {
     env: require('./prod.env'),
     index: path.resolve(__dirname, '../server/public/index.html'),
     assetsRoot: path.resolve(__dirname, '../server/public'),
+    assetsServerRoot: path.resolve(__dirname, '../server'),
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     productionSourceMap: false,
@@ -29,7 +28,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       wms4: {
-        target: 'http://127.0.0.1:' + server.port + '/',
+        target: 'http://127.0.0.1:13000/',
         secure: false
       }
     },
