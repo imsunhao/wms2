@@ -26,6 +26,9 @@
 <script>
   import { speckText } from '../config/Tools';
   import { mapState } from 'vuex';
+  
+  const io = require('io');
+  
   export default {
     name: 'wms',
     beforeRouteEnter (to, from, next) {
@@ -49,8 +52,14 @@
       ...mapState(['http']),
     },
     mounted () {
-      this.ws = new WebSocket('ws://' + this.http.ip + ':13000/ws');
-      console.log(this.ws);
+      let userName = 'imsunhao';
+      const socket = io.connect('http://' + this.http.ip + ':13000/');
+      socket.on('connect', function () {
+        console.log(userName);
+        socket.emit('join', userName);
+      });
+
+//      this.ws = new WebSocket('ws://' + this.http.ip + ':13000/ws');
 //      this.ws.onmessage = function (e) {
 //        console.log('_message');
 //        console.log(e.data);
