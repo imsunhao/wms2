@@ -27,9 +27,9 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/api': {
+      '/wms4': {
         target: 'http://127.0.0.1:13000/',
-        pathRewrite: {'^/api' : 'wms4'},
+        // pathRewrite: {'^/api' : '/wms4'},
         secure: false,
         changeOrigin: false
       }
