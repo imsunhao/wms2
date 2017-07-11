@@ -58,24 +58,6 @@
         console.log(userName);
         socket.emit('join', userName);
       });
-
-//      this.ws = new WebSocket('ws://' + this.http.ip + ':13000/ws');
-//      this.ws.onmessage = function (e) {
-//        console.log('_message');
-//        console.log(e.data);
-//      };
-//      this.ws.onerror = function (err) {
-//        console.log('_error');
-//        console.log(err);
-//      };
-//      this.ws.onopen = function () {
-//        console.log('_connect');
-//      };
-//      this.ws.onclose = function () {
-//        console.log('_close');
-//      };
-//
-//      this.ws.send('data');
     },
   };
 </script>
