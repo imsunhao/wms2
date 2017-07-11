@@ -19,7 +19,7 @@
           <h1 @click="wifi=!wifi">WMS 4.0</h1>
           <p class="version">&nbsp;--&nbsp;乐速科技&nbsp;--&nbsp;</p>
           <div class="form">
-          <transition name="wifi">
+            <transition name="wifi">
               <el-form
                 v-if="!wifi"
                 key="main"
@@ -37,9 +37,10 @@
               <el-form
                 key="wifi"
                 v-if="wifi">
-                <qrcode :value="http" :options="{ foreground: '#50a3a2',size:150 }"></qrcode>
+                <qrcode :value="`http://${http.ip}:${http.ip.port}/`"
+                        :options="{ foreground: '#50a3a2',size:150 }"></qrcode>
               </el-form>
-          </transition>
+            </transition>
           </div>
         </div>
       </transition>
@@ -50,10 +51,11 @@
 <script>
   import ElForm from '../../node_modules/element-ui/packages/form/src/form';
   import { mapState } from 'vuex';
-// import {speckText} from '../config/Tools';
+  // import {speckText} from '../config/Tools';
   import Validate from '../config/Validate/Login';
   import route from '../router';
   import dev from '../../config';
+  
   import Mutations from '../config/Mutations/M_Login';
   import { MutationsMethods } from '../config/Mutations';
   
@@ -77,7 +79,10 @@
       this.$http.get('/wms4/wifi')
       .then(response => {
         // get body data
-        this.f(0, `http://${response.body}:${dev.dev.port}/`);
+        this.f(0, {
+          ip: response.body,
+          port: dev.dev.port,
+        });
       }, response => {
         // error callback
         console.log(response);
@@ -91,7 +96,7 @@
       login () {
         this.$refs['ref_form'].validate(valid => {
           if (valid) {
-            route.push({ path: '/wms/home' });
+            route.push({path: '/wms/home'});
             this.loading = true;
             this.show = false;
           } else {
@@ -183,7 +188,7 @@
         transition-timing-function: ease-in-put;
         font-weight: 200;
       }
-  
+      
       button {
         -webkit-appearance: none;
         -moz-appearance: none;
@@ -212,7 +217,7 @@
     padding: 20px 0;
     position: relative;
     z-index: 2;
-    min-height:190px;
+    min-height: 190px;
     input {
       -webkit-appearance: none;
       -moz-appearance: none;
@@ -240,12 +245,12 @@
       width: 300px;
       color: #53e3a6;
     }
-    .is-error{
-      input{
+    .is-error {
+      input {
         border: 1px solid rgba(238, 53, 42, 0.4);
         background-color: rgba(238, 53, 42, 0.2);
       }
-      input:focus{
+      input:focus {
         border: 1px solid rgba(238, 53, 42, 0.4);
         background-color: rgba(238, 53, 42, 0.2);
       }
@@ -433,28 +438,31 @@
     animation: fade-leave 1.5s forwards;
   }
   
-  .wifi-enter-active,.wifi-leave-active {
+  .wifi-enter-active, .wifi-leave-active {
     position: absolute;
     width: 360px;
     transition: 2s;
   }
-  .wifi-enter-active{
+  
+  .wifi-enter-active {
     opacity: 0;
   }
-  .wifi-leave-active{
+  
+  .wifi-leave-active {
     opacity: 1;
   }
   
-  .wifi-enter-to,.wifi-leave-to {
+  .wifi-enter-to, .wifi-leave-to {
     animation: wifi-enter 1.5s forwards;
     opacity: 1;
   }
+  
   .wifi-leave-to {
     animation: wifi-leave 1.5s forwards;
     opacity: 0;
   }
-
-  @keyframes wifi-enter{
+  
+  @keyframes wifi-enter {
     0% {
       transform: rotateY(180deg);
     }
@@ -462,7 +470,8 @@
       transform: rotateY(0deg);
     }
   }
-  @keyframes wifi-leave{
+  
+  @keyframes wifi-leave {
     0% {
       transform: rotateY(-180deg);
     }
@@ -470,7 +479,8 @@
       transform: rotateY(0deg);
     }
   }
-  @keyframes fade-leave{
+  
+  @keyframes fade-leave {
     0% {
       transform: rotateX(0deg) translateY(0px);
     }
@@ -489,5 +499,5 @@
     margin-bottom: -15px;
     margin-top: -6px;
   }
-  
+
 </style>

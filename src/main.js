@@ -67,7 +67,10 @@ const store = new Vuex.Store({
         shopId: '10333',
       },
     ],
-    http: '',
+    http: {
+      ip: '',
+      port: 0,
+    },
   },
   getters: {
     doneTodos: state => {
