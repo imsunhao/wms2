@@ -42,14 +42,15 @@
       return {
         loading: false,
         error: false,
-//        ws: new WebSocket('ws://' + this.http + ':13000/ws'),
+        ws: '',
       };
     },
     computed: {
       ...mapState(['http']),
     },
     mounted () {
-      console.log(this);
+      this.ws = new WebSocket('ws://' + this.http.ip + ':13000/ws');
+      console.log(this.ws);
 //      this.ws.onmessage = function (e) {
 //        console.log('_message');
 //        console.log(e.data);
