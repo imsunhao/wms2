@@ -49,11 +49,13 @@
 
 <script>
   import ElForm from '../../node_modules/element-ui/packages/form/src/form';
+  import { mapState } from 'vuex';
 // import {speckText} from '../config/Tools';
   import Validate from '../config/Validate/Login';
-  import { mapState, mapGetters } from 'vuex';
   import route from '../router';
   import dev from '../../config';
+  import Mutations from '../config/Mutations/M_Login';
+  import { MutationsMethods } from '../config/Mutations';
   
   export default {
     components: {ElForm},
@@ -72,12 +74,10 @@
     },
     mounted () {
       setTimeout(() => { this.show = true; }, 0);
-      this.$http
-      .get('/wms4/wifi')
+      this.$http.get('/wms4/wifi')
       .then(response => {
         // get body data
-        this.changeHttp();
-        this.http = `http://${response.body}:${dev.dev.port}/`;
+        this.f(0, `http://${response.body}:${dev.dev.port}/`);
       }, response => {
         // error callback
         console.log(response);
@@ -86,7 +86,6 @@
     },
     computed: {
       ...mapState(['http']),
-      ...mapGetters(['changeHttp']),
     },
     methods: {
       login () {
@@ -101,6 +100,7 @@
         });
 //        speckText('正在登陆...');
       },
+      ...MutationsMethods(Mutations),
     },
   };
 </script>

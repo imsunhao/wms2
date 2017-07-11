@@ -148,9 +148,6 @@
       ...mapGetters(['doneTodos']),
     },
     methods: {
-      f (number) {
-        this[Mutations[number].event_name]();
-      },
       p (number) {
         switch (number) {
         case 0:
