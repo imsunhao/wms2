@@ -1,6 +1,15 @@
-const state = {};
+const state = {
+  user: {
+    username: '',
+    password: '',
+  },
+};
 
-const mutations = {};
+const mutations = {
+  updateUser (state, payload) {
+    state.user = payload.amount;
+  },
+};
 
 const actions = {};
 

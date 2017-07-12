@@ -1,7 +1,7 @@
-
 import LoadingConf from '../../config/Loading/title';
+import * as user from './public/user';
 
-export default {
+let vueX = {
   state: {
     // activePage: {},
     count: 0,
@@ -51,10 +51,7 @@ export default {
       ip: '',
       port: 0,
     },
-    user: {
-      username: '',
-      password: '',
-    },
+    ...user.state,
   },
   getters: {
     doneTodos: state => {
@@ -68,17 +65,27 @@ export default {
     updateHttp (state, payload) {
       state.http = payload.amount;
     },
-    updateUser (state, payload) {
-      state.user = payload.amount;
-    },
     openLoading (state, payload) {
       state.loading['s' + payload.amount] = true;
       state.loading['t'] = LoadingConf(payload.t);
     },
+    ...user.mutations,
     // changeActivePage (state, payload) {
     //   state.activePage = payload.amount;
     // },
   },
   actions: {},
-  modules: {},
 };
+
+function Constructor (data) {
+  data.forEach(item => {
+    Object.assign(vueX.state, item.state);
+    Object.assign(vueX.getters, item.getters);
+    Object.assign(vueX.mutations, item.mutations);
+    Object.assign(vueX.actions, item.actions);
+  });
+}
+
+Constructor([user]);
+
+export default vueX;
