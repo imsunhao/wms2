@@ -1,9 +1,9 @@
 import LoadingConf from '../../config/Loading/title';
 import * as user from './public/user';
+import * as http from './public/http';
 
 let vueX = {
   state: {
-    // activePage: {},
     count: 0,
     loading: {
       s0: false,
@@ -47,11 +47,6 @@ let vueX = {
         shopId: '10333',
       },
     ],
-    http: {
-      ip: '',
-      port: 0,
-    },
-    ...user.state,
   },
   getters: {
     doneTodos: state => {
@@ -62,14 +57,10 @@ let vueX = {
     increment (state, payload) {
       state.count += payload.amount;
     },
-    updateHttp (state, payload) {
-      state.http = payload.amount;
-    },
     openLoading (state, payload) {
       state.loading['s' + payload.amount] = true;
       state.loading['t'] = LoadingConf(payload.t);
     },
-    ...user.mutations,
     // changeActivePage (state, payload) {
     //   state.activePage = payload.amount;
     // },
@@ -77,15 +68,14 @@ let vueX = {
   actions: {},
 };
 
-function Constructor (data) {
-  data.forEach(item => {
-    Object.assign(vueX.state, item.state);
-    Object.assign(vueX.getters, item.getters);
-    Object.assign(vueX.mutations, item.mutations);
-    Object.assign(vueX.actions, item.actions);
-  });
-}
-
-Constructor([user]);
+[
+  user,
+  http,
+].forEach(item => {
+  Object.assign(vueX.state, item.state);
+  Object.assign(vueX.getters, item.getters);
+  Object.assign(vueX.mutations, item.mutations);
+  Object.assign(vueX.actions, item.actions);
+});
 
 export default vueX;
