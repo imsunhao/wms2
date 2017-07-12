@@ -28,6 +28,7 @@
   import { mapState } from 'vuex';
   
   const io = require('io');
+  let socket = '';
   
   export default {
     name: 'wms',
@@ -53,12 +54,14 @@
     },
     mounted () {
       speckText(`欢迎${this.user.role},${this.user.nickname}!`);
-      let nickname = this.user.nickname;
-      const socket = io.connect('http://' + this.http.ip + ':13000/');
-      socket.on('connect', function () {
-        console.log(nickname);
-        socket.emit('join', nickname);
-      });
+      if (socket === '') {
+        socket = io.connect('http://' + this.http.ip + ':13000/');
+        let nickname = this.user.nickname;
+        socket.on('connect', function () {
+          console.log(nickname);
+          socket.emit('join', nickname);
+        });
+      }
     },
   };
 </script>

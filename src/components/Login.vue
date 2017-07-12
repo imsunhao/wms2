@@ -100,6 +100,7 @@
             .then(response => {
               // get body data
               if (response.body.status < 10000) {
+                console.log(111);
                 this.f(1, response.body.data);
                 this.loading = true;
                 this.show = false;

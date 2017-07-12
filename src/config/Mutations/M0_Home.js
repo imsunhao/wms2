@@ -1,7 +1,6 @@
 export default [
   {
-    event_name: 'SOME_MUTATION1',
-    commit: 'increment',
+    commit: 'increment_0',
     payload: obj => {
       return {
         event: '测试而已',
@@ -10,8 +9,7 @@ export default [
     },
   },
   {
-    event_name: 'SOME_MUTATION2',
-    commit: 'increment',
+    commit: 'increment_1',
     payload (obj) {
       return {
         event: '测试而已222',
