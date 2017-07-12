@@ -16,14 +16,25 @@ Vue.component('loading-comp', LoadingComp);
 Vue.component('error-comp', ErrorComp);
 Vue.component('qrcode', VueQrcode);
 
+import { sync } from 'vuex-router-sync';
 import App from './App.vue';
 import router from './router';
 const store = new VueX.Store(VueXConfig);
-/* eslint-disable no-new */
-new Vue({
+sync(store, router);
+
+import Mutations from './config/Mutations/M_APP';
+import { MutationsMethods } from './config/Mutations';
+
+export default new Vue({
   el: '#app',
   store,
   router,
   template: '<App/>',
   components: {App},
+  computed: {
+    ...VueX.mapState(['http', 'user']),
+  },
+  methods: {
+    ...MutationsMethods(Mutations),
+  },
 });

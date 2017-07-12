@@ -62,6 +62,7 @@ export default new Router({
     {
       path: '/wms',
       component: Main,
+      meta: { requiresAuth: true },
       children: [
         {
           path: 'home',
@@ -80,10 +81,6 @@ export default new Router({
           component: User,
         },
       ],
-      beforeEnter: (to, from, next) => {
-        console.log('开始验证身份...');
-        setTimeout(() => { console.log('身份验证成功！开始加载路由...'); next(); }, 10);
-      },
     },
   ],
 });

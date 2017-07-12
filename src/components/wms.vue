@@ -5,7 +5,7 @@
     element-loading-text="拼命加载中">
     <error-comp v-if="error" :title="'asdgsd'"></error-comp>
     <h1>Hello App!
-      <router-link to="/">wms</router-link>
+      <button @click="signOut">退出系统</button>
     </h1>
     <el-card class="box-card">
       <div slot="header" class="clearfix">
@@ -25,7 +25,7 @@
 
 <script>
   import { speckText } from '../config/Tools';
-  import { mapState } from 'vuex';
+  import App from '../main';
   
   const io = require('io');
   let socket = '';
@@ -33,14 +33,36 @@
   export default {
     name: 'wms',
     beforeRouteEnter (to, from, next) {
-      // 在渲染该组件的对应路由被 confirm 前调用
-      // 不！能！获取组件实例 `this`
-      // 因为当钩子执行前，组件实例还没被创建
-      speckText('登录成功！');
-      setTimeout(() => {
-        console.log('页面加载完成!\n等待上一个页面动画完成中...');
+      if (to.matched.some(record => record.meta.requiresAuth)) {
+        if (App.user.nickname === '') {
+          App.$http.post('/wms4/users/Login')
+          .then(response => {
+            if (response.body.status < 10000) {
+              App.f(0, response.body.data);
+              speckText(`欢迎回来! ${App.user.role}-${App.user.nickname}!`);
+              next();
+            } else {
+              next({path: '/'});
+            }
+          });
+        } else {
+          speckText(`欢迎 ${App.user.role}-${App.user.nickname}!`);
+          if (socket === '') {
+            socket = io.connect('http://' + App.http.ip + ':13000/');
+            let nickname = App.user.nickname;
+            socket.on('connect', function () {
+              console.log(nickname);
+              socket.emit('join', nickname);
+            });
+          }
+          setTimeout(() => {
+            console.log('页面加载完成!\n等待上一个页面动画完成中...');
+            next();
+          }, 1500);
+        }
+      } else {
         next();
-      }, 1500);
+      }
     },
     data () {
       return {
@@ -49,19 +71,15 @@
         ws: '',
       };
     },
-    computed: {
-      ...mapState(['http', 'user']),
-    },
-    mounted () {
-      speckText(`欢迎${this.user.role},${this.user.nickname}!`);
-      if (socket === '') {
-        socket = io.connect('http://' + this.http.ip + ':13000/');
-        let nickname = this.user.nickname;
-        socket.on('connect', function () {
-          console.log(nickname);
-          socket.emit('join', nickname);
+    methods: {
+      signOut () {
+        this.$http.post('/wms4/users/logout')
+        .then(response => {
+          if (response.body.status < 10000) {
+            this.$router.replace({path: '/'});
+          }
         });
-      }
+      },
     },
   };
 </script>

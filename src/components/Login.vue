@@ -52,7 +52,7 @@
   import { mapState } from 'vuex';
   import {speckText} from '../config/Tools';
   import Validate from '../config/Validate/V_Login';
-  import route from '../router';
+//  import route from '../router';
   import dev from '../../config';
   
   import Mutations from '../config/Mutations/M_Login';
@@ -100,11 +100,10 @@
             .then(response => {
               // get body data
               if (response.body.status < 10000) {
-                console.log(111);
                 this.f(1, response.body.data);
                 this.loading = true;
                 this.show = false;
-                route.push({path: '/wms/home'});
+                this.$router.push({path: '/wms/home'});
               } else {
   
               }
