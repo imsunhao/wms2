@@ -2,8 +2,8 @@ const state = {};
 
 const mutations = {};
 
-const action = {};
+const actions = {};
 
 const gatters = {};
 
-export { state, mutations, action, gatters };
+export { state, mutations, actions, gatters };
