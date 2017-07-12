@@ -1,7 +1,7 @@
 const state = {
   http: {
-    ip: '',
-    port: 0,
+    ip: '192.168.191.1',
+    port: 18080,
   },
 };
 

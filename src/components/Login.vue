@@ -52,8 +52,7 @@
   import { mapState } from 'vuex';
   import {speckText} from '../config/Tools';
   import Validate from '../config/Validate/V_Login';
-//  import route from '../router';
-  import dev from '../../config';
+//  import dev from '../../config';
   
   import Mutations from '../config/Mutations/M_Login';
   import { MutationsMethods } from '../config/Mutations';
@@ -73,21 +72,22 @@
       };
     },
     mounted () {
-      this.$http.get('/wms4/wifi')
-      .then(response => {
-        // get body data
-        this.f(0, {
-          ip: response.body,
-          port: dev.dev.port,
-        });
-      }, response => {
-        // error callback
-        console.log(response);
-      });
+//      this.$http.get('/wms4/wifi')
+//      .then(response => {
+//        // get body data
+//        this.f(0, {
+//          ip: response.body,
+//          port: dev.dev.port,
+//        });
+//      }, response => {
+//        // error callback
+//        console.log(response);
+//      });
       this.form = this.user;
 //      this.form.password = '';
       this.show = true;
       speckText('欢迎使用乐速科技WMS 4.0');
+//      speckText('乐速科技 智能物流!欢迎使用乐速科技WMS 4.0');
     },
     computed: {
       ...mapState(['http', 'user']),
