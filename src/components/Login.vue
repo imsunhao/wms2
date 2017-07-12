@@ -72,6 +72,16 @@
       };
     },
     mounted () {
+      if (this.user.nickname === '') {
+        this.$http.post('/wms4/users/Login')
+        .then(response => {
+          if (response.body.status < 10000) {
+            this.f(1, response.body.data);
+            this.$router.replace({path: '/wms/home'});
+          }
+        });
+      }
+  
 //      this.$http.get('/wms4/wifi')
 //      .then(response => {
 //        // get body data

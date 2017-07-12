@@ -76,7 +76,8 @@
         this.$http.post('/wms4/users/logout')
         .then(response => {
           if (response.body.status < 10000) {
-            this.$router.replace({path: '/'});
+            console.log('用户退出！');
+            this.$router.push({path: '/'});
           }
         });
       },
