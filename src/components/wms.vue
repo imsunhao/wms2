@@ -30,15 +30,30 @@
   const io = require('io');
   let socket = '';
   
+  function checkSocket (nickname) {
+    console.log(socket);
+    if (socket === '') {
+      socket = io.connect('http://' + App.http.ip + ':13000/');
+      socket.on('connect', function () {
+        console.log(nickname);
+        socket.emit('join', nickname);
+      });
+    } else {
+      socket.emit('checkUser', nickname);
+    }
+  }
+  
   export default {
     name: 'wms',
     beforeRouteEnter (to, from, next) {
       if (to.matched.some(record => record.meta.requiresAuth)) {
-        if (App.user.nickname === '') {
+        let nickname = App.user.nickname;
+        if (nickname === '') {
           App.$http.post('/wms4/users/Login')
           .then(response => {
             if (response.body.status < 10000) {
               App.f(0, response.body.data);
+              checkSocket(App.user.nickname);
               speckText(`欢迎回来! ${App.user.role}-${App.user.nickname}!`);
               next();
             } else {
@@ -47,14 +62,7 @@
           });
         } else {
           speckText(`欢迎 ${App.user.role}-${App.user.nickname}!`);
-          if (socket === '') {
-            socket = io.connect('http://' + App.http.ip + ':13000/');
-            let nickname = App.user.nickname;
-            socket.on('connect', function () {
-              console.log(nickname);
-              socket.emit('join', nickname);
-            });
-          }
+          checkSocket(App.user.nickname);
           setTimeout(() => {
             console.log('页面加载完成!\n等待上一个页面动画完成中...');
             next();
@@ -77,6 +85,7 @@
         .then(response => {
           if (response.body.status < 10000) {
             console.log('用户退出！');
+            socket.emit('leave', App.user.nickname);
             this.$router.push({path: '/'});
           }
         });
