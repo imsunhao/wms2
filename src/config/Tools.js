@@ -1,3 +1,5 @@
+import {statusConfig, validateRule} from './PublicMethods';
+
 function speckText (str) {
   // var request=  new URLRequest();
   let url = 'http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&text=' + encodeURI(str);        // baidu
@@ -17,78 +19,6 @@ function speckText (str) {
   // var sound = new Sound(request);
   // sound.play();
 }
-
-const validateRule = {
-  vNumber: function (rule, value, callback) {
-    if (isNaN(value)) {
-      callback(new Error('必须为数字!'));
-    } else {
-      callback();
-    }
-  },                   // 是   数字
-  vNumberZZ: function (rule, value, callback) {
-    if (value < 0 || ((value + '').indexOf('.') !== -1)) {
-      callback(new Error('必须为正整数!'));
-    } else {
-      callback();
-    }
-  },                 // 是   正整数
-
-  vNull: function (rule, value, callback) {
-    if (value === '') {
-      callback(new Error('必填!'));
-    } else {
-      callback();
-    }
-  },                     // 不是 空
-  vNHZ: function (rule, value, callback) {
-    let reg = new RegExp('[\\u4E00-\\u9FFF]+', 'g');
-    if (reg.test(value)) {
-      callback(new Error('不能含有汉字!'));
-    } else {
-      callback();
-    }
-  },                      // 不含有 汉字
-  vNTS: function (rule, value, callback) {
-    if ((new RegExp(/^\w+$/, 'g')).exec(value)) {
-      return callback();
-    } else {
-      return callback(new Error('不能含有特殊符号!'));
-    }
-  },                      // 不含有 特殊符号
-
-  vWS4: function (rule, value, callback) {
-    if ((value + '').length > 4) {
-      return callback(new Error('必须小于4位!'));
-    } else {
-      return callback();
-    }
-  },                      // 必须小于4位
-  vWS16: function (rule, value, callback) {
-    if ((value + '').length > 16) {
-      return callback(new Error('必须小于16位!'));
-    } else {
-      return callback();
-    }
-  },                     // 必须小于16位
-
-  v_Car: function (rule, value, callback) {
-    let reg = new RegExp('^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[A-Z0-9]{4}[A-Z0-9挂学警港澳]{1}$', 'g');
-    if (!reg.test(value)) {
-      return callback(new Error('必须为中国车牌号!'));
-    } else {
-      return callback();
-    }
-  },                     // 必须为车牌号
-
-  v$User1: function (rule, value, callback) {
-    if ((value + '').length < 6 && (value + '').length !== 0) {
-      return callback(new Error('必须大于6位!或者不填写'));
-    } else {
-      return callback();
-    }
-  },                   // 必须大于6位!或者不填写
-};
 
 function autoValidate (option, cbs) {
   // function autoValidateRule(string, model) {
@@ -146,8 +76,47 @@ function autoValidatePuls (obj) {
   return obj;
 }
 
+function statusJudg (status, option) {
+  let {
+    s,         // 判断为 成功之后的 函数回调
+    e,         // 判断为 失败之后的 函数回调
+    show,      // 是否显示 成功与失败 后的 通知窗
+    showS,     // 是否显示 成功      后的 通知窗
+    showE,     // 是否显示 失败      后的 通知窗
+    title,     // 手动设置 标题
+    message,   // 手动设置 通知内容
+    type,      // 手动设置 失败后提示的样式
+  } = option;
+  if (status < 10000) {
+    if (show || showS) {
+      this.$notify({
+        title: title || statusConfig[status].title || '成功',
+        message: message || statusConfig[status].message || statusConfig[status],
+        type: 'success',
+      });
+    }
+    if (s) s();
+  } else {
+    if (show || showE) {
+      this.$notify({
+        title: title || statusConfig[status].title || '失败',
+        message: message || statusConfig[status].message || statusConfig[status],
+        type: type || 'error',
+      });
+    }
+    if (e) e();
+  }
+}
+
+function publicMethods () {
+  return {
+    statusJudg,             // 自动判断 status 的值
+  };
+}
+
 export {
   speckText,                 // 核心 语音播报
   autoValidate,              // 核心 自动prop组合 for validate验证
   autoValidatePuls,          // 核心 自动obj组合 for validate验证
+  publicMethods,             // VUE 页面级别 必备函数
 };

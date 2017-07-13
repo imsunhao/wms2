@@ -37,24 +37,28 @@ module.exports = function (router) {
     let data = req.body
     if (typeof req.session.user !== 'undefined') {
       console.log('用户身份验证')
-      res.send({status: 1, data: req.session.user})
+      res.send({status: 3, data: req.session.user})
       status = true
     } else {
-      console.log('用户登录')
-      Users.forEach(function (item, index, array) {
-        if (item.username === data.username) {
-          if (item.password === data.password) {
-            req.session.user = item
-            res.send({status: 1, data: item})
-            status = true
-          } else {
-            res.send({status: 10000})
-            status = true
+      if(typeof data.username !== 'undefined'){
+        console.log('用户登录')
+        Users.forEach(function (item, index, array) {
+          if (item.username === data.username) {
+            if (item.password === data.password) {
+              req.session.user = item
+              res.send({status: 1, data: item})
+              status = true
+            } else {
+              res.send({status: 10000})
+              status = true
+            }
           }
-        }
-      })
+        })
+        if (!status) res.send({status: 10001})
+      }else{
+        res.send({status: 10003})
+      }
     }
-    if (!status) res.send({status: 10001})
   })
 
   router.post('/users/logout', function (req, res, next) {

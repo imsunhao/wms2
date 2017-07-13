@@ -48,17 +48,22 @@
     beforeRouteEnter (to, from, next) {
       if (to.matched.some(record => record.meta.requiresAuth)) {
         let nickname = App.user.nickname;
-        if (nickname === '') {
+        if (typeof nickname === 'undefined' || nickname === '') {
           App.$http.post('/wms4/users/Login')
           .then(response => {
-            if (response.body.status < 10000) {
-              App.f(0, response.body.data);
-              checkSocket(App.user.nickname);
-              speckText(`欢迎回来! ${App.user.role}-${App.user.nickname}!`);
-              next();
-            } else {
-              next({path: '/'});
-            }
+            App.statusJudg(response.body.status, {
+              s: () => {
+                App.f(0, response.body.data);
+                checkSocket(App.user.nickname);
+                speckText(`欢迎回来! ${App.user.role}-${App.user.nickname}!`);
+                next();
+              },
+              e: () => {
+                next({path: '/'});
+              },
+              show: true,
+              type: 'warning',
+            });
           });
         } else {
           speckText(`欢迎 ${App.user.role}-${App.user.nickname}!`);
@@ -84,9 +89,9 @@
         this.$http.post('/wms4/users/logout')
         .then(response => {
           if (response.body.status < 10000) {
+            this.$router.push({path: '/'});
             console.log('用户退出！');
             socket.emit('leave', App.user.nickname);
-            this.$router.push({path: '/'});
           }
         });
       },

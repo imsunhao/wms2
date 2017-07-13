@@ -50,9 +50,9 @@
 
 <script>
   import { mapState } from 'vuex';
-  import {speckText} from '../config/Tools';
+  import { speckText, publicMethods } from '../config/Tools';
   import Validate from '../config/Validate/V_Login';
-//  import dev from '../../config';
+  //  import dev from '../../config';
   
   import Mutations from '../config/Mutations/M_Login';
   import { MutationsMethods } from '../config/Mutations';
@@ -72,16 +72,43 @@
       };
     },
     mounted () {
-      if (this.user.nickname === '') {
+      this.checkUser();
+    },
+    watch: {
+      // 如果路由有变化，会再次执行该方法
+      '$route': 'checkUser()',
+    },
+    computed: {
+      ...mapState(['http', 'user']),
+    },
+    methods: {
+      login () {
+        this.$refs['ref_form'].validate(valid => {
+          if (valid) {
+            this.$http.post('/wms4/users/Login', this.form)
+            .then(response => {
+              this.statusJudg(response.body.status, {
+                s: () => {
+                  this.f(1, response.body.data);
+                  this.loading = true;
+                  this.show = false;
+                  this.$router.push({path: '/wms/home'});
+                },
+                show: true,
+              });
+            });
+          } else {
+            return false;
+          }
+        });
+      },
+      checkUser () {
         this.$http.post('/wms4/users/Login')
         .then(response => {
           if (response.body.status < 10000) {
             this.f(1, response.body.data);
             this.$router.replace({path: '/wms/home'});
-          }
-        });
-      }
-  
+          } else {
 //      this.$http.get('/wms4/wifi')
 //      .then(response => {
 //        // get body data
@@ -93,41 +120,17 @@
 //        // error callback
 //        console.log(response);
 //      });
-      this.form = this.user;
+            this.form = this.user;
 //      this.form.password = '';
-      this.show = true;
-      speckText('欢迎使用乐速科技WMS 4.0');
+            speckText('欢迎使用乐速科技WMS 4.0');
+            this.f(1, {});
 //      speckText('乐速科技 智能物流!欢迎使用乐速科技WMS 4.0');
-    },
-    computed: {
-      ...mapState(['http', 'user']),
-    },
-    methods: {
-      login () {
-        this.$refs['ref_form'].validate(valid => {
-          if (valid) {
-            this.$http.post('/wms4/users/Login', this.form)
-            .then(response => {
-              // get body data
-              if (response.body.status < 10000) {
-                this.f(1, response.body.data);
-                this.loading = true;
-                this.show = false;
-                this.$router.push({path: '/wms/home'});
-              } else {
-  
-              }
-            }, response => {
-              // error callback
-              console.log(response);
-            });
-//            speckText('正在登陆...');
-          } else {
-            return false;
+            this.show = true;
           }
         });
       },
       ...MutationsMethods(Mutations),
+      ...publicMethods(),
     },
   };
 </script>

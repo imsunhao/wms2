@@ -24,6 +24,7 @@ sync(store, router);
 
 import Mutations from './config/Mutations/M_APP';
 import { MutationsMethods } from './config/Mutations';
+import { publicMethods } from './config/Tools';
 
 export default new Vue({
   el: '#app',
@@ -36,5 +37,6 @@ export default new Vue({
   },
   methods: {
     ...MutationsMethods(Mutations),
+    ...publicMethods(),
   },
 });
