@@ -489,19 +489,43 @@
   
   @keyframes wifi-enter {
     0% {
-      transform: rotateY(180deg);
+      transform: rotateY(-180deg);
+    }
+    60% {
+      transform: rotateY(1120deg);
+    }
+    70% {
+      transform: rotateY(1060deg);
+    }
+    80% {
+      transform: rotateY(1100deg);
+    }
+    90% {
+      transform: rotateY(1075deg);
     }
     100% {
-      transform: rotateY(0deg);
+      transform: rotateY(1080deg);
     }
   }
   
   @keyframes wifi-leave {
     0% {
-      transform: rotateY(-180deg);
+      transform: rotateY(0deg);
+    }
+    60% {
+      transform: rotateY(1300deg);
+    }
+    70% {
+      transform: rotateY(1240deg);
+    }
+    80% {
+      transform: rotateY(1280deg);
+    }
+    90% {
+      transform: rotateY(1255deg);
     }
     100% {
-      transform: rotateY(0deg);
+      transform: rotateY(1260deg);
     }
   }
   
