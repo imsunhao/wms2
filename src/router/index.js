@@ -13,6 +13,14 @@ const User = {
   template: '<h2>User {{ $route.params.id }}</h2>',
 };
 
+const Route = () => ({
+  component: import('@/components/Route.vue'),
+  loading: LoadingComp,
+  error: ErrorComp,
+  delay: time.delay,
+  timeout: time.timeout,
+});
+
 const Login = () => ({
   component: import('@/components/Login.vue'),
   loading: LoadingComp,
@@ -57,6 +65,10 @@ export default new Router({
   routes: [
     {
       path: '/',
+      component: Route,
+    },
+    {
+      path: '/login/:code',
       component: Login,
     },
     {

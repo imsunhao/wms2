@@ -59,7 +59,7 @@
                 next();
               },
               e: () => {
-                next({path: '/'});
+                next({path: '/login/1'});
               },
               show: true,
               type: 'warning',
@@ -89,7 +89,7 @@
         this.$http.post('/wms4/users/logout')
         .then(response => {
           if (response.body.status < 10000) {
-            this.$router.push({path: '/'});
+            this.$router.push({path: '/login/1'});
             console.log('用户退出！');
             socket.emit('leave', App.user.nickname);
           }

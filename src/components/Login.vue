@@ -59,6 +59,9 @@
   
   export default {
     name: 'login',
+    beforeRouteUpdate (to, from, next) {
+      this.checkUser();
+    },
     data () {
       return {
         wifi: false,
@@ -85,7 +88,7 @@
       login () {
         this.$refs['ref_form'].validate(valid => {
           if (valid) {
-            this.$http.post('/wms4/users/Login', this.form)
+            this.$http.post('/wms4/users/Login', {...this.form, ...this.$route.params})
             .then(response => {
               this.statusJudg(response.body.status, {
                 s: () => {
@@ -103,12 +106,26 @@
         });
       },
       checkUser () {
-        this.$http.post('/wms4/users/Login')
-        .then(response => {
-          if (response.body.status < 10000) {
-            this.f(1, response.body.data);
-            this.$router.replace({path: '/wms/home'});
-          } else {
+        if (this.$route.params.code === 1 || this.$route.params.code === '1') {
+          this.init();
+        } else {
+          this.$http.post('/wms4/users/Login', this.$route.params)
+          .then(response => {
+            this.statusJudg(response.body.status, {
+              s: () => {
+                this.f(1, response.body.data);
+                this.$router.replace({path: '/wms/home'});
+              },
+              e: () => {
+                this.init();
+              },
+              show: true,
+              type: 'warning',
+            });
+          });
+        }
+      },
+      init () {
 //      this.$http.get('/wms4/wifi')
 //      .then(response => {
 //        // get body data
@@ -120,14 +137,12 @@
 //        // error callback
 //        console.log(response);
 //      });
-            this.form = this.user;
+        this.form = this.user;
 //      this.form.password = '';
-            speckText('欢迎使用乐速科技WMS 4.0');
-            this.f(1, {});
+        speckText('欢迎使用乐速科技WMS 4.0');
+        this.f(1, {});
 //      speckText('乐速科技 智能物流!欢迎使用乐速科技WMS 4.0');
-            this.show = true;
-          }
-        });
+        this.show = true;
       },
       ...MutationsMethods(Mutations),
       ...publicMethods(),
