@@ -4,9 +4,6 @@
 </template>
 
 <script>
-
-  import App from '../main';
-
   export default {
     name: 'route',
     beforeRouteEnter (to, from, next) {

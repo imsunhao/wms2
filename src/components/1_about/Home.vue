@@ -73,12 +73,38 @@
           <template scope="s">
             {{s.$index}}
             <el-popover
+              popper-class="demo-table-expand"
               placement="right"
               :title="s.row.text"
               trigger="click">
               <slot name="content">
-                <el-button type="success" @click="f(0)">{{count}}</el-button>
-                <el-button type="success" @click="f(1)">{{countPlusLocalState}}</el-button>
+                  <el-form labelWidth="80px" label-position="left">
+                    <el-form-item label="商品名称">
+                      <span>{{ s.row.name }}</span>
+                    </el-form-item>
+                    <el-form-item label="所属店铺">
+                      <span>{{ s.row.shop }}</span>
+                    </el-form-item>
+                    <el-form-item label="商品 ID">
+                      <span>{{ s.row.id }}</span>
+                    </el-form-item>
+                    <el-form-item label="店铺 ID">
+                      <span>{{ s.row.shopId }}</span>
+                    </el-form-item>
+                    <el-form-item label="商品分类">
+                      <span>{{ s.row.category }}</span>
+                    </el-form-item>
+                    <el-form-item label="店铺地址">
+                      <span>{{ s.row.address }}</span>
+                    </el-form-item>
+                    <el-form-item label="商品描述">
+                      <span>{{ s.row.desc }}</span>
+                    </el-form-item>
+                    <el-form-item label="可用操作">
+                      <el-button type="success" size="small" @click="f(0)">{{count}}</el-button>
+                      <el-button type="success" size="small" @click="f(1)">{{countPlusLocalState}}</el-button>
+                    </el-form-item>
+                  </el-form>
               </slot>
               <button slot="reference" class="__table_index_button"></button>
             </el-popover>
@@ -183,5 +209,11 @@
 </script>
 
 <style lang="scss">
-
+  .demo-table-expand {
+    font-size: 0;
+    background-color: #fbfdff;
+    .el-form-item{
+      margin-bottom:0;
+    }
+  }
 </style>
