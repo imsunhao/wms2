@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <transition name="fadeApp">
-    <router-view class="appRouter"></router-view>
+      <router-view class="appRouter"></router-view>
     </transition>
   </div>
 </template>
@@ -39,48 +39,55 @@
   ::-webkit-scrollbar-thumb:vertical:active {
     background-color: rgba(0, 0, 0, 0.7);
   }
-
+  
   html {
     overflow: hidden;
     height: 100vh;
   }
   
-  body{
+  body {
     margin: 0;
     padding: 0;
   }
-
+  
   @media screen and (max-width: 800px) {
     html {
       overflow-x: hidden;
       overflow-y: scroll;
       height: auto;
     }
+    
+    .box-card {
+      .el-card__body {
+        padding: 0;
+      }
+    }
+    
   }
   
-  .login{
-    .inner{
-     .form {
-       .el-form-item {
-         width: 300px;
-         margin: 0 auto;
-         .el-form-item__error {
-           top: 0;
-           left: 100%;
-           text-align: left;
-           line-height: 20px;
-           width:50px;
-           height: 43px;
-           display: block;
-         }
-       }
-     }
+  .login {
+    .inner {
+      .form {
+        .el-form-item {
+          width: 300px;
+          margin: 0 auto;
+          .el-form-item__error {
+            top: 0;
+            left: 100%;
+            text-align: left;
+            line-height: 20px;
+            width: 50px;
+            height: 43px;
+            display: block;
+          }
+        }
+      }
     }
   }
-
-  #app{
+  
+  #app {
     position: relative;
-    .appRouter{
+    .appRouter {
       min-height: 100vh;
       position: absolute;
       top: 0;
@@ -92,7 +99,7 @@
   .fadeApp-enter-active {
     transition: 1s;
   }
-
+  
   .fadeApp-enter-to {
     animation: fadeApp-enter 1s forwards;
   }
@@ -100,12 +107,12 @@
   .fadeApp-leave-active {
     transition: 1s;
   }
-
+  
   .fadeApp-leave-to {
     animation: fadeApp-leave .7s forwards;
   }
   
-  @keyframes fadeApp-enter{
+  @keyframes fadeApp-enter {
     0% {
       transform: scaleY(0) scaleX(0);
     }
@@ -117,7 +124,7 @@
     }
   }
   
-  @keyframes fadeApp-leave{
+  @keyframes fadeApp-leave {
     0% {
       transform: scaleY(1) scaleX(1);
     }
@@ -129,33 +136,33 @@
     }
   }
   
-  .__table{
+  .__table {
     position: relative;
-    .el-form-item{
+    .el-form-item {
       margin-right: 0 !important;
-      .el-form-item__content{
-        width:calc(100% - 70px);
+      .el-form-item__content {
+        width: calc(100% - 70px);
       }
     }
-    .__table_button{
+    .__table_button {
       position: absolute;
       z-index: 4;
       width: 80px;
       height: 40px;
       border: none;
       outline: none;
-      background: rgba(0,0,0,0);
+      background: rgba(0, 0, 0, 0);
     }
-    .__table_index_button{
+    .__table_index_button {
       position: absolute;
       width: 100%;
       top: 0;
       left: 0;
       height: 100%;
       border: none;
-      background: rgba(0,0,0,0);
+      background: rgba(0, 0, 0, 0);
       outline: none;
     }
   }
-  
+
 </style>

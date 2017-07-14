@@ -26,22 +26,9 @@
 <script>
   import { speckText } from '../config/Tools';
   import App from '../main';
-  
-  const io = require('io');
-  let socket = '';
-  
-  function checkSocket (nickname) {
-    console.log(socket);
-    if (socket === '') {
-      socket = io.connect('http://' + App.http.ip + ':13000/');
-      socket.on('connect', function () {
-        console.log(nickname);
-        socket.emit('join', nickname);
-      });
-    } else {
-      socket.emit('checkUser', nickname);
-    }
-  }
+  import {leaveSocket, socketConfig, checkSocket} from '../config/socket';
+
+  socketConfig();
   
   export default {
     name: 'wms',
@@ -90,8 +77,8 @@
         .then(response => {
           if (response.body.status < 10000) {
             this.$router.push({path: '/login/1'});
+            leaveSocket();
             console.log('用户退出！');
-            socket.emit('leave', App.user.nickname);
           }
         });
       },
@@ -120,4 +107,5 @@
     transform: translateX(-10px);
     opacity: 0;
   }
+  
 </style>
