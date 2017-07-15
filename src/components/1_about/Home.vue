@@ -62,7 +62,7 @@
         class="__table_button"
         v-popover:popover4></button>
       <el-table
-        :data="doneTodos"
+        :data="table.data"
         :row-key="table.key"
         border>
         <el-table-column
@@ -101,8 +101,8 @@
                       <span>{{ s.row.desc }}</span>
                     </el-form-item>
                     <el-form-item label="可用操作">
-                      <el-button type="success" size="small" @click="f(0)">{{count}}</el-button>
-                      <el-button type="success" size="small" @click="f(1)">{{countPlusLocalState}}</el-button>
+                      <el-button type="success" size="small" @click="localCount++">{{localCount}}</el-button>
+                      <el-button type="success" size="small" @click="localCount+=10">{{localCount}}</el-button>
                     </el-form-item>
                   </el-form>
               </slot>
@@ -129,7 +129,8 @@
         </el-table-column>
       </el-table>
     </div>
-    <el-button @click="testHttp">testHttp</el-button>
+    <el-button @click="testHttp">下一页</el-button>
+    <el-button @click="testHttp2">上一页</el-button>
   </el-row>
 </template>
 
@@ -148,6 +149,7 @@
         error: false,
         loading: true,
         localCount: 10,
+        i: 0,
       };
     },
     created () {
@@ -163,8 +165,8 @@
       countPlusLocalState (state) {
         return state.count + this.localCount;
       },
-      ...mapState(['count']),
-      ...mapGetters(['doneTodos']),
+      ...mapState([]),
+      ...mapGetters([]),
     },
     methods: {
       p (number) {
@@ -183,10 +185,24 @@
       testHttp () {
         // GET /someUrl
         this.$http
-        .get('/wms4/12')
+        .post('/wms4/home', {pageSize: 10, pageNow: ++this.i})
         .then(response => {
           // get body data
           console.log(response.body);
+          this.table.data = response.body.data;
+        }, response => {
+          // error callback
+          console.log(response);
+        });
+      },
+      testHttp2 () {
+        // GET /someUrl
+        this.$http
+        .post('/wms4/home', {pageSize: 10, pageNow: --this.i})
+        .then(response => {
+          // get body data
+          console.log(response.body);
+          this.table.data = response.body.data;
         }, response => {
           // error callback
           console.log(response);
@@ -196,6 +212,7 @@
     },
     mounted () {
       console.log('Vue had mounted!');
+      this.testHttp();
 //      this.$store.commit(commit, payload);
     },
   };

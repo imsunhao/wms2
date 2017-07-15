@@ -6,6 +6,7 @@ function Table (options) {
   } = options;
 
   return {
+    data: [],
     multiSelect: false,
     key: data[0].prop,
     tableColumn: [data[0], data[1]],

@@ -8,14 +8,5 @@ export default [
       };
     },
   },
-  {
-    commit: 'increment_1',
-    payload (obj) {
-      return {
-        event: '测试而已222',
-        amount: 1,
-      };
-    },
-  },
 ];
 
