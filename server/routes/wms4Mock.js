@@ -28,5 +28,6 @@ if(conf.wifi){
 }
 
 require('./Mock/users')(router);
+require('./Mock/M1_home')(router);
 
 module.exports = router
