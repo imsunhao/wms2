@@ -16,9 +16,9 @@
           <el-breadcrumb-item to="/wms/user/1241">活动详情</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
-      <transition name="slide-fade" mode="out-in">
+      <!--<transition name="slide-fade" mode="out-in">-->
         <router-view></router-view>
-      </transition>
+      <!--</transition>-->
     </el-card>
   </el-row>
 </template>

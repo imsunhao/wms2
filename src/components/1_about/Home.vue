@@ -20,9 +20,9 @@
               class="__tabel_column"
               name="testSelet1"
               multiple-limit.number="4"
-              v-model="checkedCities1" multiple placeholder="请选择">
+              v-model="table.tableColumn" multiple placeholder="请选择">
               <el-option
-                v-for="item in cities"
+                v-for="item in table.tableColumnAll"
                 :key="item.prop"
                 :label="item.label"
                 :value="item">
@@ -63,10 +63,10 @@
         v-popover:popover4></button>
       <el-table
         :data="doneTodos"
-        border
-        align="center">
+        :row-key="table.key"
+        border>
         <el-table-column
-          label="#"
+          label="设置"
           fixed="left"
           width="80px"
           align="center">
@@ -113,15 +113,20 @@
         <el-table-column
           v-if="table.multiSelect"
           type="selection"
+          :reserve-selection="true"
           fixed="left"
           width="55">
         </el-table-column>
         <el-table-column
-          v-for="value in checkedCities1"
+          v-for="value in table.tableColumn"
           :key="value.prop"
           :label="value.label"
           :min-width="value.minWidth||'0px'"
-          :prop="value.prop"></el-table-column>
+          :align="value.align||'center'"
+          :formatter="value.formatter"
+          :class-name="value.className"
+          :prop="value.prop">
+        </el-table-column>
       </el-table>
     </div>
     <el-button @click="testHttp">testHttp</el-button>
@@ -133,27 +138,15 @@
   import Mutations from '../../config/Mutations/M0_Home';
   import { MutationsMethods } from '../../config/Mutations';
   
-  const cityOptions = [
-    {prop: 'id', label: '商品 ID', minWidth: '0px'},
-    {prop: 'name', label: '商品名称', minWidth: '0px'},
-    {prop: 'category', label: '商品分类', minWidth: '0px'},
-    {prop: 'desc', label: '商品描述', minWidth: '0px'},
-    {prop: 'shop', label: '所属店铺', minWidth: '0px'},
-    {prop: 'shopId', label: '店铺 ID', minWidth: '0px'},
-    {prop: 'address', label: '店铺地址', minWidth: '0px'},
-  ];
+  import { table } from '../../config/Table/T1_home';
   
   export default {
     name: 'home',
     data () {
       return {
-        table: {
-          multiSelect: false,
-        },
+        table: table,
         error: false,
         loading: true,
-        checkedCities1: [cityOptions[0], cityOptions[1]],
-        cities: cityOptions,
         localCount: 10,
       };
     },
