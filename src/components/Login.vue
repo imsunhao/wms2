@@ -50,12 +50,10 @@
 
 <script>
   import { mapState } from 'vuex';
-  import { speckText, publicMethods } from '../config/Tools';
-  import Validate from '../config/Validate/V_Login';
-  //  import dev from '../../config';
-  
-  import Mutations from '../config/Mutations/M_Login';
-  import { MutationsMethods } from '../config/Mutations';
+  import { speckText, publicMethods } from 'Tools';
+  import Validate from '~/Validate/V_Login';
+  import Mutations from '~/Mutations/M_Login';
+  import { MutationsMethods } from '~/Mutations';
   
   export default {
     name: 'login',

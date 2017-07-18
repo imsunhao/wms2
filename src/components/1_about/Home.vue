@@ -136,10 +136,10 @@
 
 <script>
   import { mapState, mapGetters } from 'vuex';
-  import Mutations from '../../config/Mutations/M0_Home';
-  import { MutationsMethods } from '../../config/Mutations';
-  
-  import { table } from '../../config/Table/T1_home';
+  import Mutations from '~/Mutations/M0_Home';
+  import { MutationsMethods } from '~/Mutations';
+  import { table } from '~/Table/T1_home';
+  import { publicMethods } from 'Tools';
   
   export default {
     name: 'home',
@@ -195,6 +195,7 @@
         });
       },
       ...MutationsMethods(Mutations),
+      ...publicMethods(),
     },
     mounted () {
       console.log('Vue had mounted!');
