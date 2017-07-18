@@ -17,7 +17,7 @@
       <transition name="fade" mode="out-in">
         <div v-if="show" class="inner">
           <h1 @click="wifi=!wifi">WMS 4.0</h1>
-          <p class="version">&nbsp;--&nbsp;乐速科技&nbsp;--&nbsp;</p>
+          <p class="version"><span>--</span>乐速科技<span>--</span></p>
           <div class="form">
             <transition name="wifi">
               <el-form
@@ -115,6 +115,7 @@
         if (this.$route.params.code === 1 || this.$route.params.code === '1') {
           this.init();
         } else {
+          this.$message('正在尝试自动登录...');
           this.p('/wms4/users/Login', this.$route.params, {
             s: response => {
               this.f(1, response.body.data);
@@ -129,13 +130,13 @@
         }
       },
       init () {
+        this.show = true;
         this.form = {
           ...this.form,
           ...this.user,
         };
         speckText('欢迎使用乐速科技WMS 4.0');
         this.f(1, {});
-        this.show = true;
       },
       ...MutationsMethods(Mutations),
       ...publicMethods(),
@@ -462,6 +463,11 @@
     opacity: 0
   }
   
+  .fade-enter-to /* .fade-leave-active in <2.1.8 */
+  {
+    opacity: 1
+  }
+  
   .fade-leave-active {
     transition: 1s;
     transform-origin: bottom;
@@ -555,6 +561,9 @@
     text-align: center;
     margin-bottom: -15px;
     margin-top: -6px;
+    span{
+      margin: 0 5px;
+    }
   }
   
 </style>
