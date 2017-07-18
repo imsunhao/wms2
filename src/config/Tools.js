@@ -1,6 +1,9 @@
 import { statusConfig, validateRule } from './PublicMethods';
 
+const SPECK = false;
+
 function speckText (str) {
+  if (!SPECK) return;
   // var request=  new URLRequest();
   let url = 'http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&text=' + encodeURI(str);        // baidu
   // url = "http://translate.google.cn/translate_tts?ie=UTF-8&tl=zh-CN&total=1&idx=0&textlen=19&prev=input&q=" + encodeURI(str); // google
@@ -77,8 +80,10 @@ function autoValidatePuls (obj) {
 }
 
 function p (url, body, option) {
+  let {loading} = option;
   this.$http.post(url, body)
   .then(response => {
+    if (loading)loading.close();
     let status = response.body.status;
     let {
       s,         // 判断为 成功之后的 函数回调
@@ -111,6 +116,7 @@ function p (url, body, option) {
     }
   })
   .catch(response => {
+    if (loading)loading.close();
     let {status, bodyText} = response;
     console.log(status, bodyText);
     this.$alert('服务器未响应！', '提示', {
@@ -170,5 +176,5 @@ export {
   autoValidate,              // 核心 自动prop组合 for validate验证
   autoValidatePuls,          // 核心 自动obj组合 for validate验证
   publicMethods,             // VUE 页面级别 必备函数
-  formatterTime,            // 格式化 日期
+  formatterTime,             // 格式化 日期
 };
