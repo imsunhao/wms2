@@ -147,7 +147,7 @@
       return {
         table: table,
         error: false,
-        loading: true,
+        loading: false,
         localCount: 10,
         i: 0,
       };
@@ -155,11 +155,10 @@
     created () {
       // 组件创建完后获取数据，
       // 此时 data 已经被 observed 了
-      this.p(0);
     },
     watch: {
       // 如果路由有变化，会再次执行该方法
-      '$route': 'p(1)',
+  
     },
     computed: {
       countPlusLocalState (state) {
@@ -169,19 +168,6 @@
       ...mapGetters([]),
     },
     methods: {
-      p (number) {
-        switch (number) {
-        case 0:
-          setTimeout(() => {
-            this.loading = false;
-            console.log('加载完成');
-//            this.error = true;
-          }, 10);
-          break;
-        default:
-          return false;
-        }
-      },
       testHttp () {
         // GET /someUrl
         this.$http
@@ -213,7 +199,6 @@
     mounted () {
       console.log('Vue had mounted!');
       this.testHttp();
-//      this.$store.commit(commit, payload);
     },
   };
 </script>
