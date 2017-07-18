@@ -165,4 +165,15 @@
     }
   }
 
+
+  .loginLoading{
+    background: rgba(255,255,255,.5);
+    .el-loading-spinner .path{
+      stroke:#13ce66
+    }
+    .el-loading-text{
+      color: #13ce66;
+    }
+  }
+
 </style>

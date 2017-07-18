@@ -75,6 +75,7 @@
       };
     },
     mounted () {
+      console.log(this);
       this.checkUser();
     },
     watch: {
@@ -88,18 +89,23 @@
       login () {
         this.$refs['ref_form'].validate(valid => {
           if (valid) {
-            this.$http.post('/wms4/users/Login', {...this.form, ...this.$route.params})
-            .then(response => {
-              this.statusJudg(response.body.status, {
-                s: () => {
+            let loading = this.$loading({
+              text: '登陆中...',
+              customClass: 'loginLoading',
+              fullscreen: true,
+            });
+            this.p('/wms4/users/Login', {
+              ...this.form,
+              ...this.$route.params}, {
+                s: response => {
                   this.f(1, response.body.data);
+                  this.$router.push({path: '/wms/home'});
                   this.loading = true;
                   this.show = false;
-                  this.$router.push({path: '/wms/home'});
                 },
                 show: true,
+                loading,
               });
-            });
           } else {
             return false;
           }
@@ -109,39 +115,26 @@
         if (this.$route.params.code === 1 || this.$route.params.code === '1') {
           this.init();
         } else {
-          this.$http.post('/wms4/users/Login', this.$route.params)
-          .then(response => {
-            this.statusJudg(response.body.status, {
-              s: () => {
-                this.f(1, response.body.data);
-                this.$router.replace({path: '/wms/home'});
-              },
-              e: () => {
-                this.init();
-              },
-              show: true,
-              type: 'warning',
-            });
+          this.p('/wms4/users/Login', this.$route.params, {
+            s: response => {
+              this.f(1, response.body.data);
+              this.$router.replace({path: '/wms/home'});
+            },
+            e: () => {
+              this.init();
+            },
+            show: true,
+            type: 'warning',
           });
         }
       },
       init () {
-//      this.$http.get('/wms4/wifi')
-//      .then(response => {
-//        // get body data
-//        this.f(0, {
-//          ip: response.body,
-//          port: dev.dev.port,
-//        });
-//      }, response => {
-//        // error callback
-//        console.log(response);
-//      });
-        this.form = this.user;
-//      this.form.password = '';
+        this.form = {
+          ...this.form,
+          ...this.user,
+        };
         speckText('欢迎使用乐速科技WMS 4.0');
         this.f(1, {});
-//      speckText('乐速科技 智能物流!欢迎使用乐速科技WMS 4.0');
         this.show = true;
       },
       ...MutationsMethods(Mutations),
@@ -563,5 +556,5 @@
     margin-bottom: -15px;
     margin-top: -6px;
   }
-
+  
 </style>
