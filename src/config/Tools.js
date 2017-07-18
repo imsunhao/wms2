@@ -76,41 +76,55 @@ function autoValidatePuls (obj) {
   return obj;
 }
 
-function statusJudg (status, option) {
-  let {
-    s,         // 判断为 成功之后的 函数回调
-    e,         // 判断为 失败之后的 函数回调
-    show,      // 是否显示 成功与失败 后的 通知窗
-    showS,     // 是否显示 成功      后的 通知窗
-    showE,     // 是否显示 失败      后的 通知窗
-    title,     // 手动设置 标题
-    message,   // 手动设置 通知内容
-    type,      // 手动设置 失败后提示的样式
-  } = option;
-  if (status < 10000) {
-    if (show || showS) {
-      this.$notify({
-        title: title || statusConfig[status].title || '成功',
-        message: message || statusConfig[status].message || statusConfig[status],
-        type: 'success',
-      });
+function p (url, body, option) {
+  this.$http.post(url, body)
+  .then(response => {
+    let status = response.body.status;
+    let {
+      s,         // 判断为 成功之后的 函数回调
+      e,         // 判断为 失败之后的 函数回调
+      show,      // 是否显示 成功与失败 后的 通知窗
+      showS,     // 是否显示 成功      后的 通知窗
+      showE,     // 是否显示 失败      后的 通知窗
+      title,     // 手动设置 标题
+      message,   // 手动设置 通知内容
+      type,      // 手动设置 失败后提示的样式
+    } = option;
+    if (status < 10000) {
+      if (show || showS) {
+        this.$notify({
+          title: title || statusConfig[status].title || '成功',
+          message: message || statusConfig[status].message || statusConfig[status],
+          type: 'success',
+        });
+      }
+      if (s) s(response);
+    } else {
+      if (show || showE) {
+        this.$notify({
+          title: title || statusConfig[status].title || '失败',
+          message: message || statusConfig[status].message || statusConfig[status],
+          type: type || 'error',
+        });
+      }
+      if (e) e(response);
     }
-    if (s) s();
-  } else {
-    if (show || showE) {
-      this.$notify({
-        title: title || statusConfig[status].title || '失败',
-        message: message || statusConfig[status].message || statusConfig[status],
-        type: type || 'error',
-      });
-    }
-    if (e) e();
-  }
+  })
+  .catch(response => {
+    let {status, bodyText} = response;
+    console.log(status, bodyText);
+    this.$alert('服务器未响应！', '提示', {
+      confirmButtonText: '我知道了',
+      callback: action => {
+        if (option.e) option.e(response);
+      },
+    });
+  });
 }
 
 function publicMethods () {
   return {
-    statusJudg,             // 自动判断 status 的值
+    p,               // post 核心
   };
 }
 
@@ -132,6 +146,7 @@ function formatterTime (value, number) {
   default:
     return dateFormat(new Date(value), 'yyyy-MM-dd');
   }
+
   function dateFormat (date, fmt) {
     const o = {
       'M+': date.getMonth() + 1,                 // 月份
