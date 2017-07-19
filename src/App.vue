@@ -97,18 +97,22 @@
   }
   
   .fadeApp-enter-active {
+    opacity: 0;
     transition: 1s;
   }
   
   .fadeApp-enter-to {
+    opacity: 1;
     animation: fadeApp-enter 1s forwards;
   }
   
   .fadeApp-leave-active {
+    opacity: 1;
     transition: 1s;
   }
   
   .fadeApp-leave-to {
+    opacity: 0;
     animation: fadeApp-leave .7s forwards;
   }
   
