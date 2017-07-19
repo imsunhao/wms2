@@ -151,21 +151,18 @@
       if (to.matched.some(record => record.meta.requiresAuth)) {
         let nickname = App.user.nickname;
         if (typeof nickname === 'undefined' || nickname === '') {
-          App.$http.post('/wms4/users/Login')
-          .then(response => {
-            App.statusJudg(response.body.status, {
-              s: () => {
-                App.f(0, response.body.data);
-                checkSocket(App.user.nickname);
-                speckText(`欢迎回来! ${App.user.role}-${App.user.nickname}!`);
-                next();
-              },
-              e: () => {
-                next({path: '/login/1'});
-              },
-              show: true,
-              type: 'warning',
-            });
+          App.p('/wms4/users/Login', {}, {
+            s: response => {
+              App.f(0, response.body.data);
+              checkSocket(App.user.nickname);
+              speckText(`欢迎回来! ${App.user.role}-${App.user.nickname}!`);
+              next();
+            },
+            e: () => {
+              next({path: '/login/1'});
+            },
+            show: true,
+            type: 'warning',
           });
         } else {
           speckText(`欢迎 ${App.user.role}-${App.user.nickname}!`);
