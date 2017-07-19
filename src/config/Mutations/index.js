@@ -1,3 +1,13 @@
+import Home from './M0_Home';
+import APP from './M_APP';
+import Login from './M_Login';
+
+const value = {
+  Home,
+  APP,
+  Login,
+};
+
 function MutationsMethods (Mutations) {
   let step = {};
   Mutations.forEach(({commit, payload}) => {
@@ -10,4 +20,13 @@ function MutationsMethods (Mutations) {
   };
   return step;
 }
-export { MutationsMethods };
+
+function autoSelectMutations (name) {
+  if (typeof value[name] === 'undefined') return {};
+  else return MutationsMethods(value[name]);
+}
+
+export {
+  MutationsMethods,
+  autoSelectMutations,
+};

@@ -51,9 +51,12 @@
 <script>
   import { mapState } from 'vuex';
   import { speckText, publicMethods } from 'Tools';
-  import Validate from '~/Validate/V_Login';
-  import Mutations from '~/Mutations/M_Login';
-  import { MutationsMethods } from '~/Mutations';
+  import CONFIG from '~';
+  
+  const {
+    Validate,
+    MutationsMethods,
+  } = CONFIG('Login');
   
   export default {
     name: 'login',
@@ -136,7 +139,7 @@
         speckText('欢迎使用乐速科技WMS 4.0');
         this.f(1, {});
       },
-      ...MutationsMethods(Mutations),
+      ...MutationsMethods,
       ...publicMethods(),
     },
   };

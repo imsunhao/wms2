@@ -1,6 +1,4 @@
 
-import {autoValidatePuls} from '../Tools';
-
 let step = {
   form: {
     'username': ['vNull', 'vNTS', 'vWS16'],
@@ -8,4 +6,4 @@ let step = {
   },
 };
 
-export default autoValidatePuls(step);
+export default step;
