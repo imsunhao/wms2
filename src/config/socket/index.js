@@ -17,7 +17,6 @@ function checkSocket (nickname) {
 function leaveSocket () {
   socket.emit('leave', App.user.nickname);
 }
-
 function socketConfig () {
   window.onbeforeunload = function () {
     leaveSocket();
@@ -27,7 +26,7 @@ function socketConfig () {
 export {
   io,
   socket,
-  checkSocket,
-  socketConfig,
-  leaveSocket,
+  checkSocket,       // 检查 是否 正在与服务器 通讯
+  socketConfig,      // 配置 socket 初始化
+  leaveSocket,       // 用户离开
 };
