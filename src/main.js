@@ -5,9 +5,28 @@ import VueX from 'vuex';
 Vue.use(VueX);
 import VueXConfig from './config/VueX';
 
-import ElementUI from 'element-ui';
+import {
+  Form,
+  FormItem,
+  MessageBox,
+  Loading,
+  Row,
+  Notification,
+  Message,
+} from 'element-ui';
+
+Vue.use(Form);
+Vue.use(Row);
+Vue.use(FormItem);
+Vue.use(Loading.directive);
+
+Vue.prototype.$loading = Loading.service;
+Vue.prototype.$msgbox = MessageBox;
+Vue.prototype.$alert = MessageBox.alert;
+Vue.prototype.$notify = Notification;
+Vue.prototype.$message = Message;
+
 import 'element-ui/lib/theme-default/index.css';
-Vue.use(ElementUI);
 
 import LoadingComp from '@/components/0_static/LoadingComp.vue';
 import ErrorComp from '@/components/0_static/ErrorComp.vue';
