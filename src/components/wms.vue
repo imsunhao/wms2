@@ -14,6 +14,7 @@
           <el-breadcrumb-item to="/wms/pane">标签页</el-breadcrumb-item>
           <el-breadcrumb-item to="/wms/qrcode">活动列表</el-breadcrumb-item>
           <el-breadcrumb-item to="/wms/user/1241">活动详情</el-breadcrumb-item>
+          <el-breadcrumb-item to="/wms/transfer">transfer</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
       <transition name="slide-fade" mode="out-in">
@@ -85,11 +86,13 @@
     CollapseItem,
     Cascader,
     ColorPicker,
+    Transfer,
   } from 'element-ui';
 
   Vue.use(Pagination);
   Vue.use(Dialog);
   Vue.use(Autocomplete);
+  Vue.use(Transfer);
   Vue.use(Dropdown);
   Vue.use(DropdownMenu);
   Vue.use(DropdownItem);

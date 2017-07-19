@@ -61,6 +61,14 @@ const QRCode = () => ({
   timeout: time.timeout,
 });
 
+const Transfer = () => ({
+  component: import('@/components/0_static/Transfer.vue'),
+  loading: LoadingComp,
+  error: ErrorComp,
+  delay: time.delay,
+  timeout: time.timeout,
+});
+
 export default new Router({
   routes: [
     {
@@ -91,6 +99,10 @@ export default new Router({
         {
           path: 'user/:id',
           component: User,
+        },
+        {
+          path: 'transfer',
+          component: Transfer,
         },
       ],
     },
