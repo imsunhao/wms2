@@ -1185,6 +1185,7 @@ module.exports = function (router) {
       shopId: '10333',
     },
   ];
+  const consoleOutPut = '\t---->\t'
   let id=12987122,
     Length=Home.length,
     shopId=10333;
@@ -1196,13 +1197,16 @@ module.exports = function (router) {
   router.post('/Home', function (req, res, next) {
     let {pageSize,pageNow} = req.body;
 
-    console.log(pageSize*(pageNow-1),pageSize*(pageNow-1)+pageSize);
 
     let step=[];
     let i=pageSize*(pageNow-1);
     for(i;i<pageSize*(pageNow-1)+pageSize;i++){
       if(typeof Home[i]!=='undefined') step.push(Home[i]);
     }
-    return res.send({data: step,sum:Length})
+    req.conso += `${consoleOutPut}分页查询 Home数据
+${consoleOutPut}返回条数：${step.length}
+`
+    res.send({data: step,sum:Length})
+    return next();
   })
 }
