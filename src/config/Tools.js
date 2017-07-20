@@ -82,6 +82,7 @@ function autoValidatePuls (obj) {
 function p (url, body, option) {
   let call;
   let {loading} = option;
+  // 最后一个 option 也可以 是 function 代表 与后台 通讯成功后 执行function
   option.constructor === Function ? call = option : call = juge;
 
   this.$http.post(url, body)

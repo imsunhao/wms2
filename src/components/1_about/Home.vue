@@ -136,16 +136,19 @@
 
 <script>
   import { mapState, mapGetters } from 'vuex';
-  import Mutations from '~/Mutations/M0_Home';
-  import { MutationsMethods } from '~/Mutations';
-  import { table } from '~/Table/T1_home';
   import { publicMethods } from 'Tools';
+  import CONFIG from '~';
+  
+  const {
+    Tables,
+    MutationsMethods,
+  } = CONFIG('Home');
   
   export default {
     name: 'home',
     data () {
       return {
-        table: table,
+        table: Tables,
         error: false,
         loading: false,
         localCount: 10,
@@ -168,36 +171,22 @@
     },
     methods: {
       testHttp () {
-        // GET /someUrl
-        this.$http
-        .post('/wms4/home', {pageSize: 10, pageNow: ++this.i})
-        .then(response => {
-          // get body data
+        this.p('/wms4/home', {pageSize: 10, pageNow: ++this.i}, response => {
           console.log(response.body);
           this.table.data = response.body.data;
-        }, response => {
-          // error callback
-          console.log(response);
         });
       },
       testHttp2 () {
-        // GET /someUrl
-        this.$http
-        .post('/wms4/home', {pageSize: 10, pageNow: --this.i})
-        .then(response => {
-          // get body data
+        this.p('/wms4/home', {pageSize: 10, pageNow: --this.i}, response => {
           console.log(response.body);
           this.table.data = response.body.data;
-        }, response => {
-          // error callback
-          console.log(response);
         });
       },
-      ...MutationsMethods(Mutations),
+      ...MutationsMethods,
       ...publicMethods(),
     },
     mounted () {
-      console.log('Vue had mounted!');
+      console.log(this);
       this.testHttp();
     },
   };
