@@ -80,9 +80,25 @@ function autoValidatePuls (obj) {
 }
 
 function p (url, body, option) {
+  let call;
   let {loading} = option;
+  option.constructor === Function ? call = option : call = juge;
+
   this.$http.post(url, body)
-  .then(response => {
+  .then(call)
+  .catch(response => {
+    if (loading)loading.close();
+    let {status, bodyText} = response;
+    console.log(status, bodyText);
+    this.$alert('服务器未响应！', '提示', {
+      confirmButtonText: '我知道了',
+      callback: action => {
+        if (option.e) option.e(response);
+      },
+    });
+  });
+
+  function juge (response) {
     if (loading)loading.close();
     let status = response.body.status;
     let {
@@ -114,18 +130,7 @@ function p (url, body, option) {
       }
       if (e) e(response);
     }
-  })
-  .catch(response => {
-    if (loading)loading.close();
-    let {status, bodyText} = response;
-    console.log(status, bodyText);
-    this.$alert('服务器未响应！', '提示', {
-      confirmButtonText: '我知道了',
-      callback: action => {
-        if (option.e) option.e(response);
-      },
-    });
-  });
+  }
 }
 
 function publicMethods () {
