@@ -76,7 +76,6 @@
       };
     },
     mounted () {
-      console.log(this);
       this.checkUser();
     },
     watch: {

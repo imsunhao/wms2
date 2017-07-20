@@ -1,4 +1,13 @@
-import {formatterTime} from '../Tools';
+import Home from './T1_home';
+
+const value = {
+  Home,
+};
+
+function autoSelectTables (name) {
+  if (typeof value[name] === 'undefined') return {};
+  else return Table(value[name]);
+}
 
 function Table (options) {
   let {
@@ -16,5 +25,5 @@ function Table (options) {
 
 export {
   Table,
-  formatterTime,
+  autoSelectTables,
 };

@@ -1,4 +1,4 @@
-import {Table, formatterTime} from './index';
+import {formatterTime} from '../Tools';
 
 const data = [
   {prop: 'id', label: '商品 ID', minWidth: '0px'},
@@ -17,8 +17,6 @@ const data = [
   {prop: 'address', label: '店铺地址', minWidth: '0px'},
 ];
 
-let table = Table({
+export default {
   data,
-});
-
-export {table};
+};
