@@ -26,7 +26,7 @@ const path = require('path')
 
 /*****************************************************************************/
 /*
- /* 启用express框架
+ /* TODO 启用express框架
  /*     功能            核心框架
  /*     功能            引入父系统
  /*     功能            引入子系统
@@ -37,7 +37,6 @@ const app = express()
 
 const index = require('./routes/index')                                //父系统
 const imageServer = require('./routes/imageServer')                    //图片服务器
-const wms4 = require('./routes/wms4Mock')                              //wms 4.0 虚拟接口
 /*
  /*****************************************************************************/
 
@@ -53,7 +52,7 @@ const FileStreamRotator = require('file-stream-rotator')
 
 /*****************************************************************************/
 /*
- /* 启用文件系统-记录log
+ /* TODO 启用文件系统-记录log
  /*     功能            记录访问服务器日志
  /*     网址：     https://github.com/expressjs/morgan
  */
@@ -138,7 +137,7 @@ app.set('view engine', 'ejs')                          //模板为ejs模板
 
 /*****************************************************************************/
 /*
- /* 启用 数据库-链接
+ /* TODO 启用 数据库-链接
  /*     功能            被           session            依赖
  /*
  */
@@ -151,11 +150,11 @@ mongoose.connection.on('error', console.error.bind(console, '连接数据库失�
 
 /*****************************************************************************/
 /*
- /* 启用 express 中间件
+ /* TODO 启用 express 中间件
  /*     功能           见注释
  /*
  */
-app.use(favicon(path.join(__dirname, 'public', 'image', 'favicon.ico')))   //图标
+app.use(favicon(path.join(__dirname, 'public/image/favicon.ico')))   //图标
 app.use(logger('combined', {stream: accessLogStream}))            //日志
 
 app.use(bodyParser.json())            //请求解析 为json格式
@@ -167,7 +166,7 @@ app.use(express.static(path.join(__dirname, 'public')))           //加载public
 
 /*****************************************************************************/
 /*
- /* 启用 session 中间件
+ /* TODO 启用 session 中间件
  /*     功能           见注释
  /*
  */
@@ -176,7 +175,7 @@ app.use(session({
   secret: 's8^%4$V4KH5fd2dd0g',
   cookie: {maxAge: 1000 * 60 * 60 * 24},//1小时 //1k (s) * 60(min) *60 (hover) *24(day)
   store: new MongoStore({
-    db: 'wms',
+    db: 'wms4',
     mongooseConnection: mongoose.connection
   }),
   resave: true,
@@ -187,7 +186,7 @@ app.use(session({
 
 /*****************************************************************************/
 /*
- /*   TODO 访问统计 imsunhao
+ /*   访问统计 imsunhao
  /*     功能           见注释
  /*
  */
@@ -197,7 +196,7 @@ app.use(session({
 
 /*****************************************************************************/
 /*
- /* 启用 用户登陆身份验证 中间件
+ /* TODO 启用 用户登陆身份验证 中间件
  /*     功能           见注释
  /*
  */
@@ -240,15 +239,29 @@ const devConfig = require('./config/dev')
 /*主页*/
 app.use('/', index)
 
-/*模拟网络延迟*/
+// TODO wms 4.0 虚拟接口
+const wms4 = require('./routes/wms4Mock')
+
+// 模拟网络延迟
 app.use('/wms4', function (req, res, next) {
   setTimeout(function () {
     next()
   }, devConfig.setTimeout)
 })
 
-/*wms Mock*/
+// wms Mock
 app.use('/wms4', wms4)
+
+// TODO wms 4.0 端口转发
+
+const proxyMiddleware = require('http-proxy-middleware')
+app.use(proxyMiddleware('/wms_cg_web', {
+  target: 'http://127.0.0.1:8080/',
+  // pathRewrite: {'^/api' : '/wms4'},
+  secure: false,
+  changeOrigin: false
+}))
+
 
 // error handler analysis
 app.use(function (req, res, next) {
