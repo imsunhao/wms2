@@ -15,13 +15,13 @@ module.exports=function (socketIO) {
 
       socket.join(roomID);    // 加入房间
       // 通知房间内人员
-      socketIO.to(roomID).emit('sys', user + '加入了房间', roomInfo[roomID]);
-      console.log(user + '加入了' + roomID);
+      socketIO.to(roomID).emit('\tsys\t', user + '\t加入了房间\t', roomInfo[roomID]);
+      console.log(user + '\t加入了\t' + roomID);
     });
 
     socket.on('leave', function () {
       socket.emit('disconnect');
-      console.log(user + '退出了' + roomID);
+      console.log(user + '\t退出了\t' + roomID);
     });
 
     socket.on('disconnect', function () {
@@ -32,7 +32,7 @@ module.exports=function (socketIO) {
       }
 
       socket.leave(roomID);    // 退出房间
-      socketIO.to(roomID).emit('sys', user + '退出了房间', roomInfo[roomID]);
+      socketIO.to(roomID).emit('\tsys\t', user + '\t退出了房间\t', roomInfo[roomID]);
     });
 
     // 接收用户消息,发送相应的房间
@@ -48,9 +48,9 @@ module.exports=function (socketIO) {
     socket.on('checkUser', function (username) {
       // 验证如果用户不在房间内则不给发送
       if(user!==username){
-        let string =user+'更换昵称,';
+        let string =user+'\t更换昵称,\t';
         user=username;
-        string +=user + '加入了房间';
+        string +=user + '\t加入了房间\t';
         // 将用户昵称加入房间名单中
         if (!roomInfo[roomID]) {
           roomInfo[roomID] = [];
@@ -59,11 +59,11 @@ module.exports=function (socketIO) {
 
         socket.join(roomID);    // 加入房间
         // 通知房间内人员
-        socketIO.to(roomID).emit('sys',string, roomInfo[roomID]);
+        socketIO.to(roomID).emit('\tsys\t',string, roomInfo[roomID]);
         console.log(string + roomID);
       }else{
-        console.log(username + '重新加入了房间' + roomID);
-        socketIO.to(roomID).emit('sys', username + '重新加入了房间', roomInfo[roomID]);
+        console.log(username + '\t重新加入了房间\t' + roomID);
+        socketIO.to(roomID).emit('\tsys\t', username + '\t重新加入了房间\t', roomInfo[roomID]);
       }
     });
   });

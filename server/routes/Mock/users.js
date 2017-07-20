@@ -45,6 +45,7 @@ module.exports = function (router) {
       console.log('用户身份验证')
       res.send({status: 3, data: req.session.user})
       status = true
+      next();
     }
     else if (typeof data.code !== 'undefined' && data.code != 0 && data.code != 1) {
       let string = '用户尝试使用 code 登录...\n'
@@ -54,32 +55,36 @@ module.exports = function (router) {
           req.session.user = item
           res.send({status: 4, data: item})
           status = true
+          next();
         }
       })
       if (!status) {
         string += consoleOutPut + '无效的 code ！\n'
         res.send({status: 10003})
+        next();
       }
       console.log(string)
     }
     else {
       if (typeof data.username !== 'undefined') {
         console.log('用户登录')
-        Users.forEach(function (item, index, array) {
+        for(item of Users) {
           if (item.username === data.username) {
             if (item.password === data.password) {
               req.session.user = item
               res.send({status: 1, data: item})
-              status = true
+              return next();
             } else {
               res.send({status: 10000})
-              status = true
+              return next();
             }
           }
-        })
-        if (!status) res.send({status: 10001})
+        }
+        res.send({status: 10001})
+        return next();
       } else {
         res.send({status: 10003})
+        next();
       }
     }
   })
@@ -87,6 +92,7 @@ module.exports = function (router) {
   router.post('/users/logout', function (req, res, next) {
     console.log('用户退出')
     req.session.destroy()
-    return res.send({status: 2})
+    res.send({status: 2})
+    next();
   })
 }

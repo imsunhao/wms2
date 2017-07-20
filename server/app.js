@@ -242,17 +242,88 @@ app.use('/', index)
 // TODO wms 4.0 虚拟接口
 const wms4 = require('./routes/wms4Mock')
 
+// 通知层-开始
+app.use('/wms4', function (req, res, next) {
+  req.timeStart = new Date();
+  let user='有新的客户';
+  if(req.session.user){
+    user=req.session.user.nickname;
+  }
+  req.conso=
+`-----------------------------------------------
+${user}\t发起请求:
+\t请求路径：${req.originalUrl}
+\t请求方法：${req.method}
+\t请求参数：
+\t\t${JSON.stringify(req.body)}
+`;
+  next();
+})
+
 // 模拟网络延迟
 app.use('/wms4', function (req, res, next) {
   setTimeout(function () {
-    next()
+    return next();
   }, devConfig.setTimeout)
 })
 
 // wms Mock
 app.use('/wms4', wms4)
 
+
+// 通知层-输出
+app.use('/wms4', function (req, res, next) {
+  let stringTime = StringTime(new Date().getTime() - req.timeStart.getTime()) // 时间差的毫秒数
+
+  req.conso+=
+`
+用户请求结束
+用时:${stringTime}
+-----------------------------------------------`;
+  console.log(req.conso);
+})
+
+function StringTime (date3) {
+  let string="";
+  //计算相差的年数
+  let years = Math.floor(date3 / (12 * 30 * 24 * 3600 * 1000));
+  if(years)string+=`${years} 年\t`;
+  //计算相差的月数
+  let leave = date3 % (12 * 30 * 24 * 3600 * 1000);
+  let months = Math.floor(leave / (30 * 24 * 3600 * 1000));
+  if(months)string+=`${months} 月\t`;
+  //计算出相差天数
+  let leave0 = leave % (30 * 24 * 3600 * 1000);
+  let days = Math.floor(leave0 / (24 * 3600 * 1000));
+  if(days)string+=`${days} 天\t`;
+  //计算出小时数
+  let leave1 = leave0 % (24 * 3600 * 1000);     //计算天数后剩余的毫秒数
+
+  let hours = Math.floor(leave1 / (3600 * 1000));
+  if(hours)string+=`${hours} 时\t`;
+  //计算相差分钟数
+  let leave2 = leave1 % (3600 * 1000);         //计算小时数后剩余的毫秒数
+
+  let minutes = Math.floor(leave2 / (60 * 1000));
+  if(minutes)string+=`${minutes} 分\t`;
+  //计算相差秒数
+  let leave3 = leave2 % (60 * 1000);       //计算分钟数后剩余的毫秒数
+
+  let seconds = Math.round(leave3 / 1000);
+  if(seconds)string+=`${seconds} 秒\t`;
+
+
+  let leave4 = leave3 % (1000);       //毫秒数
+  let millisecond = Math.round(leave3);
+  string+=`${millisecond} 毫秒`;
+
+  return string;
+}
+
+
+
 // TODO wms 4.0 端口转发
+// 一旦切换为 真实端口 便没有通知层
 
 const proxyMiddleware = require('http-proxy-middleware')
 app.use(proxyMiddleware('/wms_cg_web', {
@@ -267,6 +338,7 @@ app.use(proxyMiddleware('/wms_cg_web', {
 app.use(function (req, res, next) {
   let err = new Error('Not Found')
   err.status = 404
+  console.log(req.originalUrl)
   next(err)
 })
 
@@ -278,7 +350,7 @@ app.use(function (err, req, res, next) {
   // res.locals.error = req.app.get('env') === 'development' ? err : {};
   // render the error page
   // res.status(err.status || 500);
-  res.send({status: err.status, model: err.message})
+  console.log(err)
 })
 
 /*
