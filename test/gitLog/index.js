@@ -52,7 +52,7 @@ fs.readFile('C:\\project\\study\\vueWebSim2\\test\\gitLog\\log\\' + fileName + '
       }
     }
     let buffer = xlsx.build(option)
-    fs.writeFileSync('./output/' + fileName + '.xlsx', buffer, 'binary')
+    fs.writeFileSync('C:\\project\\study\\vueWebSim2\\test\\gitLog/output/' + fileName + '.xlsx', buffer, 'binary')
   }
 
 })
