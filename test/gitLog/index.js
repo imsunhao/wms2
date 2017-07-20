@@ -6,8 +6,9 @@ const http = require('http')
 
 const fs = require('fs')
 let result = []
+const fileName = 'wms4'
 
-fs.readFile('C:\\project\\study\\vueWebSim2\\test\\gitLog\\log\\1.txt', function (err, data) {
+fs.readFile('C:\\project\\study\\vueWebSim2\\test\\gitLog\\log\\' + fileName + '.txt', function (err, data) {
   if (err) {
     console.log('读取日志文件失败!')
   } else {
@@ -51,7 +52,7 @@ fs.readFile('C:\\project\\study\\vueWebSim2\\test\\gitLog\\log\\1.txt', function
       }
     }
     let buffer = xlsx.build(option)
-    fs.writeFileSync('./output/wms4.xlsx', buffer, 'binary')
+    fs.writeFileSync('./output/' + fileName + '.xlsx', buffer, 'binary')
   }
 
 })
