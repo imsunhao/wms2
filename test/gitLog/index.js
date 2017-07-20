@@ -1,17 +1,17 @@
-const express = require('express')
-const app = express()
+// const express = require('express')
+// const app = express()
 const xlsx = require('node-xlsx')
-const router = express.Router()
+// const router = express.Router()
 const http = require('http')
 
 const fs = require('fs')
 let result = []
 
-fs.readFile('C:/project/work/12/1.txt', function (err, data) {
+fs.readFile('C:\\project\\study\\vueWebSim2\\test\\gitLog\\log\\1.txt', function (err, data) {
   if (err) {
     console.log('读取日志文件失败!')
   } else {
-    let p = /Author: (\w+) <(\w[-\w.+]*@[A-Za-z0-9][-A-Za-z0-9]+\.+[A-Za-z]{2,14})> Date:   ([\s\S]{30})      ([\w \！\!\-\.\,\，\。\‘\“\"\'\、\n/\·A-Z\u4e00-\u9fa5]+)  commit/g
+    let p = /Author: (\w+) <(\w[-\w.+]*@[A-Za-z0-9][-A-Za-z0-9]+\.+[A-Za-z]{2,14})> Date:   ([\s\S]{29,30})      ([\w \！\!\-\.\,\，\。\‘\“\"\'\、\n/\·A-Z\u4e00-\u9fa5]+)  commit/g
     data = data.toString().replace(/\n/g, ' ')
 
     let res = []
@@ -40,29 +40,41 @@ fs.readFile('C:/project/work/12/1.txt', function (err, data) {
 
     console.log('成功读取 共' + i + '条！')
     // console.log(data.toString())
-  }
-
-})
-
-router.get('/exportExcel', function (req, res, next) {
-// write
-  let option = []
-  for (index in result) {
-    if (result.hasOwnProperty(index)) {
-      option.push({
-        name: index,
-        data: result[index]
-      })
-      console.log(index + ' 共' + result[index].length + '条！')
+    let option = []
+    for (index in result) {
+      if (result.hasOwnProperty(index)) {
+        option.push({
+          name: index,
+          data: result[index]
+        })
+        console.log(index + ' 共' + (result[index].length - 1) + '条！')
+      }
     }
+    let buffer = xlsx.build(option)
+    fs.writeFileSync('./output/wms4.xlsx', buffer, 'binary')
   }
-  let buffer = xlsx.build(option)
-  fs.writeFileSync('b.xlsx', buffer, 'binary')
-  res.send('export successfully!')
 
 })
 
-app.use('/', router)
-app.set('port', 19999)
-const server = http.createServer(app)
-server.listen(19999)
+// router.get('/exportExcel', function (req, res, next) {
+// // write
+//   let option = []
+//   for (index in result) {
+//     if (result.hasOwnProperty(index)) {
+//       option.push({
+//         name: index,
+//         data: result[index]
+//       })
+//       console.log(index + ' 共' + result[index].length + '条！')
+//     }
+//   }
+//   let buffer = xlsx.build(option)
+//   fs.writeFileSync('b.xlsx', buffer, 'binary')
+//   res.send('export successfully!')
+//
+// })
+//
+// app.use('/', router)
+// app.set('port', 19999)
+// const server = http.createServer(app)
+// server.listen(19999)
