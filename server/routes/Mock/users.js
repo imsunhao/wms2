@@ -42,57 +42,54 @@ module.exports = function (router) {
     let status = false
     let data = req.body
     if (typeof req.session.user !== 'undefined') {
-      console.log('用户身份验证')
+      req.conso += '用户身份验证'
       res.send({status: 3, data: req.session.user})
       status = true
-      next();
+      next()
     }
     else if (typeof data.code !== 'undefined' && data.code != 0 && data.code != 1) {
-      let string = '用户尝试使用 code 登录...\n'
-      Users.forEach(function (item, index, array) {
+      req.conso += '用户尝试使用 code 登录...\n'
+      for (item of Users) {
         if (item.code === data.code) {
-          string = item.nickname + ' 使用 code 登录！\n'
+          req.conso += item.nickname + ' 使用 code 登录！\n'
           req.session.user = item
           res.send({status: 4, data: item})
           status = true
-          next();
+          return next()
         }
-      })
-      if (!status) {
-        string += consoleOutPut + '无效的 code ！\n'
-        res.send({status: 10003})
-        next();
       }
-      console.log(string)
+      req.conso += consoleOutPut + '无效的 code ！\n'
+      res.send({status: 10003})
+      return next()
     }
     else {
       if (typeof data.username !== 'undefined') {
-        console.log('用户登录')
-        for(item of Users) {
+        req.conso += '用户登录'
+        for (item of Users) {
           if (item.username === data.username) {
             if (item.password === data.password) {
               req.session.user = item
               res.send({status: 1, data: item})
-              return next();
+              return next()
             } else {
               res.send({status: 10000})
-              return next();
+              return next()
             }
           }
         }
         res.send({status: 10001})
-        return next();
+        return next()
       } else {
         res.send({status: 10003})
-        next();
+        next()
       }
     }
   })
 
   router.post('/users/logout', function (req, res, next) {
-    console.log('用户退出')
+    req.conso += '用户退出'
     req.session.destroy()
     res.send({status: 2})
-    next();
+    next()
   })
 }
