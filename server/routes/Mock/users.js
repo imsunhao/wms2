@@ -42,6 +42,7 @@ module.exports = function (router) {
     let data = req.body
     if (typeof req.session.user !== 'undefined') {
       req.conso += consoleOutPut + '用户身份验证\n'
+      req.conso += consoleOutPut + req.session.user.nickname + '\t用户身份验证通过\n'
       res.send({status: 3, data: req.session.user})
       return next()
     }
