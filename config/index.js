@@ -32,7 +32,13 @@ module.exports = {
         // pathRewrite: {'^/api' : '/wms4'},
         secure: false,
         changeOrigin: false
-      }
+      },
+      '/wms_cg_web': {
+        target: 'http://127.0.0.1:8080/',
+        // pathRewrite: {'^/api' : '/wms4'},
+        secure: false,
+        changeOrigin: false
+      },
     },
     // CSS Sourcemaps off by default because relative paths are "buggy"
     // with this option, according to the CSS-Loader README

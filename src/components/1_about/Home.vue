@@ -131,6 +131,7 @@
     </div>
     <el-button @click="testHttp">下一页</el-button>
     <el-button @click="testHttp2">上一页</el-button>
+    <el-button @click="testHttp3">测试正式服务器请求转发</el-button>
   </el-row>
 </template>
 
@@ -180,6 +181,11 @@
         this.p('/wms4/home', {pageSize: 10, pageNow: --this.i}, response => {
           console.log(response.body);
           this.table.data = response.body.data;
+        });
+      },
+      testHttp3 () {
+        this.$http.get('/wms_cg_web/auth/admin/123456').then(response => {
+          console.log(response.body);
         });
       },
       ...MutationsMethods,
