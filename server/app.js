@@ -242,14 +242,38 @@ app.use('/', index)
 // TODO wms 4.0 虚拟接口
 const wms4 = require('./routes/wms4Mock')
 
-// 通知层-开始
-
+// 标色
 const {
   error,
   warning,
   pathLog,
   usernameLog
 } = require('./config/dev')
+
+// 登录验证
+app.use(function (req, res, next) {
+  if (!req.session.user) {
+    if (req.session.fail && typeof req.session.firstTime !== 'undefined') {
+      let minutes = Math.floor((new Date().getTime() - new Date(req.session.firstTime).getTime()) / (60 * 1000))
+      if (minutes > 0) {
+        delete req.session.firstTime
+        delete req.session.fail
+        delete req.session.frequency
+        req.session.save();
+        return next()
+      } else {
+        warning('存在用户尝试未在1min后登录！')
+        res.send({status: 10004})
+      }
+    } else if (req.originalUrl !== '/wms4/users/Login') {
+      error(`未授权的用户尝试访问私密端口！\n 时间：${(new Date()).toLocaleString()}`)
+    } else {
+      return next()
+    }
+  } else return next()
+})
+
+// 通知层-开始
 
 app.use('/wms4', function (req, res, next) {
   req.timeStart = new Date()
