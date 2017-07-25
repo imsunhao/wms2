@@ -266,7 +266,9 @@ app.use(function (req, res, next) {
         res.send({status: 10004})
       }
     } else if (req.originalUrl !== '/wms4/users/Login') {
-      error(`未授权的用户尝试访问私密端口！\n 时间：${(new Date()).toLocaleString()}`)
+      let err = new Error(`未授权的用户尝试访问私密端口${req.originalUrl}！\n 时间：${(new Date()).toLocaleString()}`)
+      err.status = 403
+      next(err)
     } else {
       return next()
     }
@@ -366,21 +368,15 @@ app.use(proxyMiddleware('/wms_cg_web', {
 
 // error handler analysis
 app.use(function (req, res, next) {
-  let err = new Error('Not Found')
+  let err = new Error(req.originalUrl+'Not Found')
   err.status = 404
-  console.log(req.originalUrl)
   next(err)
 })
 
 // error handler
 app.use(function (err, req, res, next) {
-  // set locals, only providing error in development
-
-  // res.locals.message = err.message;
-  // res.locals.error = req.app.get('env') === 'development' ? err : {};
-  // render the error page
-  // res.status(err.status || 500);
-  console.log(err)
+  error(err.status+'\n'+err.message);
+  res.send({status: 40000+err.status})
 })
 
 /*

@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 
-const conf =require('../config/dev')
+const conf = require('../config/dev')
 
 if(conf.wifi){
   const fs = require('fs')
