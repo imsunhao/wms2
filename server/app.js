@@ -259,7 +259,7 @@ app.use(function (req, res, next) {
         delete req.session.firstTime
         delete req.session.fail
         delete req.session.frequency
-        req.session.save();
+        req.session.save()
         return next()
       } else {
         warning('存在用户尝试未在1min后登录！')
