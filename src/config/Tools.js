@@ -86,7 +86,18 @@ function p (url, body, option) {
   option.constructor === Function ? call = option : call = juge;
 
   this.$http.post(url, body)
-  .then(call)
+  .then(response => {
+    if (response.body.status > 40000) {
+      this.$notify({
+        title: '请求失败',
+        message: statusConfig[response.body.status].message || statusConfig[response.body.status],
+        type: 'error',
+      });
+      this.$router.push('/login/1');
+    } else {
+      call.call(this, response);
+    }
+  })
   .catch(response => {
     if (loading)loading.close();
     let {status, bodyText} = response;
