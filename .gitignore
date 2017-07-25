@@ -8,6 +8,7 @@ yarn-error.log*
 /server/public
 /server/config/server
 /server/log
+/server/views
 
 .idea/
 

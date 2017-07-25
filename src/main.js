@@ -26,7 +26,7 @@ Vue.prototype.$alert = MessageBox.alert;
 Vue.prototype.$notify = Notification;
 Vue.prototype.$message = Message;
 
-import 'element-ui/lib/theme-default/index.css';
+// import 'element-ui/lib/theme-default/index.css';
 
 // import LoadingComp from '@/components/0_static/LoadingComp.vue';
 // import ErrorComp from '@/components/0_static/ErrorComp.vue';
