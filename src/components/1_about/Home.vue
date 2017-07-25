@@ -19,6 +19,7 @@
             <el-select
               class="__tabel_column"
               name="testSelet1"
+              value-key="prop"
               multiple-limit.number="4"
               v-model="table.tableColumn" multiple placeholder="请选择">
               <el-option
