@@ -68,6 +68,9 @@
         wifi: false,
         rule: Validate,
         loading: false,
+        waiting: false,
+        loadingTimer: 0,
+        stopTime: 0,
         show: false,
         form: {
           username: '',
@@ -89,23 +92,42 @@
       login () {
         this.$refs['ref_form'].validate(valid => {
           if (valid) {
-            let loading = this.$loading({
-              text: '登陆中...',
-              customClass: 'loginLoading',
-              fullscreen: true,
-            });
-            this.p('/wms4/users/Login', {
-              ...this.form,
-              ...this.$route.params}, {
+            if (this.waiting) {
+              this.$message(`请等待${Math.floor(this.stopTime / 1000)}秒后重试...`);
+            } else {
+              let loading = this.$loading({
+                text: '登陆中...',
+                customClass: 'loginLoading',
+                fullscreen: true,
+              });
+              this.p('/wms4/users/Login', {
+                ...this.form,
+                ...this.$route.params,
+              }, {
                 s: response => {
                   this.f(1, response.body.data);
                   this.$router.push({path: '/wms/home'});
                   this.loading = true;
                   this.show = false;
                 },
+                e: response => {
+                  if (response.body.status === 10004) {
+                    this.waiting = true;
+                    clearInterval(this.loadingTimer);
+                    this.stopTime = 60000 - parseInt(response.body.data);
+                    this.loadingTimer = setInterval(() => {
+                      this.stopTime -= 1000;
+                      if (this.stopTime < 0) {
+                        this.waiting = false;
+                        clearInterval(this.loadingTimer);
+                      }
+                    }, 1000);
+                  }
+                },
                 show: true,
                 loading,
               });
+            }
           } else {
             return false;
           }

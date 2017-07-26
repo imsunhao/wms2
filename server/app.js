@@ -196,39 +196,6 @@ app.use(session({
 
 /*****************************************************************************/
 /*
- /* TODO 启用 用户登陆身份验证 中间件
- /*     功能           见注释
- /*
- */
-// app.use(function (req, res, next) {
-//   //demo req.originalUrl.match(/\/article\/read\/.*/)
-//   if (/^.+\./.test(req.originalUrl) || /^\/page\/.+/.test(req.originalUrl)) return next()
-//   /*<debug>*/
-//   console.log('---------启用验证！------------------')
-//   if (typeof req.session.user !== 'undefined')
-//     console.log(req.session.user.rmsUser.ruUserName)
-//   else {
-//     console.log('未登录用户')
-//   }
-//   console.log(req.originalUrl)
-//   // console.log("--------------------------------------");
-//   /*</debug>*/
-//   if (req.session.user || req.originalUrl == '/users/login') {
-//     next()
-//   } else {
-//     return res.redirect('/users/login')
-//   }
-// })
-
-// function a(test) {
-//     return /^.+\./.test(test)||/^\/page\/.+/.test(test)
-// }
-
-/*
- /*****************************************************************************/
-
-/*****************************************************************************/
-/*
  /* 启用 路由适配
  /*     功能           见注释
  /*
@@ -254,7 +221,8 @@ const {
 app.use(function (req, res, next) {
   if (!req.session.user) {
     if (req.session.fail && typeof req.session.firstTime !== 'undefined') {
-      let minutes = Math.floor((new Date().getTime() - new Date(req.session.firstTime).getTime()) / (60 * 1000))
+      let se = (new Date().getTime() - new Date(req.session.firstTime).getTime())
+      let minutes = Math.floor(se / (1000 * 60))
       if (minutes > 0) {
         delete req.session.firstTime
         delete req.session.fail
@@ -263,10 +231,10 @@ app.use(function (req, res, next) {
         return next()
       } else {
         warning('存在用户尝试未在1min后登录！')
-        res.send({status: 10004})
+        res.send({status: 10004, data: se})
       }
     } else if (req.originalUrl !== '/wms4/users/Login') {
-      let err = new Error(`未授权的用户尝试访问私密端口${req.originalUrl}！\n 时间：${(new Date()).toLocaleString()}`)
+      let err = new Error(`未授权的用户尝试访问私密端口！\n\t\t端口:${req.originalUrl}\n\t\t时间：${(new Date()).toLocaleString()}`)
       err.status = 403
       next(err)
     } else {
@@ -319,6 +287,12 @@ app.use('/wms4', function (req, res, next) {
   console.log(req.conso)
 })
 
+/**
+ *
+ * @param date3
+ * @returns {string}
+ * @constructor
+ */
 function StringTime (date3) {
   let string = ''
   //计算相差的年数
@@ -368,15 +342,15 @@ app.use(proxyMiddleware('/wms_cg_web', {
 
 // error handler analysis
 app.use(function (req, res, next) {
-  let err = new Error(req.originalUrl+'Not Found')
+  let err = new Error(req.originalUrl + 'Not Found')
   err.status = 404
   next(err)
 })
 
 // error handler
 app.use(function (err, req, res, next) {
-  error(err.status+'\n'+err.message);
-  res.send({status: 40000+err.status})
+  error(err.status + '\t' + err.message)
+  res.send({status: 40000 + err.status})
 })
 
 /*
